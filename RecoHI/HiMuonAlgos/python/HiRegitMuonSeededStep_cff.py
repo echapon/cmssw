@@ -98,16 +98,19 @@ hiRegitMuonSeededTracksOutInSelector = RecoHI.HiTracking.hiMultiTrackSelector_cf
       trackSelectors= cms.VPSet(
          RecoTracker.FinalTrackSelectors.multiTrackSelector_cfi.looseMTS.clone(
             name = 'hiRegitMuonSeededTracksOutInLoose',
+            min_nhits = cms.uint32(8)
             ),
          RecoHI.HiTracking.hiMultiTrackSelector_cfi.hiTightMTS.clone(
             name = 'hiRegitMuonSeededTracksOutInTight',
             preFilterName = 'hiRegitMuonSeededTracksOutInLoose',
+            min_nhits = cms.uint32(8),
             useMVA = cms.bool(True),
             minMVA = cms.double(-0.2)
             ),
          RecoHI.HiTracking.hiMultiTrackSelector_cfi.hiHighpurityMTS.clone(
             name = 'hiRegitMuonSeededTracksOutInHighPurity',
             preFilterName = 'hiRegitMuonSeededTracksOutInTight',
+            min_nhits = cms.uint32(8),
             useMVA = cms.bool(True),
             minMVA = cms.double(-0.09)
             ),
