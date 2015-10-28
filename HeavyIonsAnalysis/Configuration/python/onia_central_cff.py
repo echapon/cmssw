@@ -3,7 +3,7 @@ import FWCore.ParameterSet.Config as cms
 # HLT dimuon trigger
 import HLTrigger.HLTfilters.hltHighLevel_cfi
 hltoniaMMHI = HLTrigger.HLTfilters.hltHighLevel_cfi.hltHighLevel.clone()
-# hltoniaMMHI.HLTPaths = ["HLT_HIL1DoubleMu0"] # here for the peripheral we need only this path; for the Central PD we need both this one, together with teh L2 and L3 jpsi and Upsilon paths
+# hltoniaMMHI.HLTPaths = ["HLT_HIL1DoubleMu0"] # here for the central we need only this path; for the Central PD we need both this one, together with teh L2 and L3 jpsi and Upsilon paths
 hltoniaMMHI.HLTPaths = ["*"] # don't apply any trigger requirement for now
 hltoniaMMHI.throw = False
 hltoniaMMHI.andOr = True
@@ -40,7 +40,7 @@ dimuonMassCutFilter = cms.EDFilter("CandViewCountFilter",
     )
 
 # onia skim sequence
-oniaMMperipheralSkimSequence = cms.Sequence(
+oniaMMcentralSkimSequence = cms.Sequence(
     hltoniaMMHI *
     primaryVertexFilterForoniaMM *
     muonSelector *
