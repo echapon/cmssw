@@ -31,7 +31,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run2_mc_hi', '')
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-       'file:b2jpsi_753reco.root'
+       'file:step2_reRECO_740_9_1_e5r.root'
         ),
 )
 
@@ -48,9 +48,9 @@ process.MessageLogger.warnings = cms.untracked.PSet(
 process.source.inputCommands = cms.untracked.vstring("keep *", "drop *_MEtoEDMConverter_*_*")
 
 process.load("HeavyIonsAnalysis.Configuration.onia_peripheral_cff")
-process.hltZMMHI.TriggerResultsTag = cms.InputTag('TriggerResults','','RECO')
-process.hltZMMHI.HLTPaths = ["*"] # here for the peripheral we need only this path; for the Central PD we need both this one, together with teh L2 and L3 jpsi and Upsilon paths
-process.oniaFilter = cms.Path(process.zMMSkimSequence)
+process.hltoniaMMHI.TriggerResultsTag = cms.InputTag('TriggerResults','','HLT')
+process.hltoniaMMHI.HLTPaths = ["HLT_HIL1DoubleMu*"] # here for the peripheral we need only this path; for the Central PD we need both this one, together with teh L2 and L3 jpsi and Upsilon paths
+process.oniaFilter = cms.Path(process.oniaMMperipheralSkimSequence)
 
 process.aodoutput = cms.OutputModule("PoolOutputModule",
                                         dataset = cms.untracked.PSet(
