@@ -2,49 +2,49 @@ import FWCore.ParameterSet.Config as cms
 
 # HLT dimuon trigger
 import HLTrigger.HLTfilters.hltHighLevel_cfi
-hltoniaMMHI = HLTrigger.HLTfilters.hltHighLevel_cfi.hltHighLevel.clone()
-# hltoniaMMHI.HLTPaths = ["HLT_HIL1DoubleMu0"] # here for the central we need only this path; for the Central PD we need both this one, together with teh L2 and L3 jpsi and Upsilon paths
-hltoniaMMHI.HLTPaths = ["*"] # don't apply any trigger requirement for now
-hltoniaMMHI.throw = False
-hltoniaMMHI.andOr = True
+hltCentralOniaMMHI = HLTrigger.HLTfilters.hltHighLevel_cfi.hltHighLevel.clone()
+# hltCentralOniaMMHI.HLTPaths = ["HLT_HIL1DoubleMu0"] # here for the central we need only this path; for the Central PD we need both this one, together with teh L2 and L3 jpsi and Upsilon paths
+hltCentralOniaMMHI.HLTPaths = ["*"] # don't apply any trigger requirement for now
+hltCentralOniaMMHI.throw = False
+hltCentralOniaMMHI.andOr = True
 
 # selection of valid vertex
-primaryVertexFilterForoniaMM = cms.EDFilter("VertexSelector",
+primaryVertexFilterForOniaMMCentral = cms.EDFilter("VertexSelector",
     src = cms.InputTag("hiSelectedVertex"),
     cut = cms.string("!isFake && abs(z) <= 25 && position.Rho <= 2"), 
     filter = cms.bool(True),   # otherwise it won't filter the events
     )
 
 # selection of dimuons with mass in Jpsi or 
-muonSelector = cms.EDFilter("MuonSelector",
+muonSelectorForOniaMMCentral = cms.EDFilter("MuonSelector",
     src = cms.InputTag("muons"),
     cut = cms.string("(isTrackerMuon && isGlobalMuon) && pt > 1.5"),
     filter = cms.bool(True)
     )
 
-muonFilter = cms.EDFilter("MuonCountFilter",
-    src = cms.InputTag("muonSelector"),
+muonFilterForOniaMMCentral = cms.EDFilter("MuonCountFilter",
+    src = cms.InputTag("muonSelectorForOniaMMCentral"),
     minNumber = cms.uint32(2)
     )
 
 # opposite charge only 
-dimuonMassCut = cms.EDProducer("CandViewShallowCloneCombiner",
+dimuonMassCutForOniaMMCentral = cms.EDProducer("CandViewShallowCloneCombiner",
     checkCharge = cms.bool(True),
     cut = cms.string(' (2.6 < mass < 3.5) || (7.0 < mass < 14.0)'),
-    decay = cms.string("muonSelector@+ muonSelector@-")
+    decay = cms.string("muonSelectorForOniaMMCentral@+ muonSelectorForOniaMMCentral@-")
     )
 
-dimuonMassCutFilter = cms.EDFilter("CandViewCountFilter",
-    src = cms.InputTag("dimuonMassCut"),
+dimuonMassCutFilterForOniaMMCentral = cms.EDFilter("CandViewCountFilter",
+    src = cms.InputTag("dimuonMassCutForOniaMMCentral"),
     minNumber = cms.uint32(1)
     )
 
 # onia skim sequence
 oniaMMcentralSkimSequence = cms.Sequence(
-    hltoniaMMHI *
-    primaryVertexFilterForoniaMM *
-    muonSelector *
-    muonFilter *
-    dimuonMassCut *
-    dimuonMassCutFilter
+    hltCentralOniaMMHI *
+    primaryVertexFilterForOniaMMCentral *
+    muonSelectorForOniaMMCentral *
+    muonFilterForOniaMMCentral *
+    dimuonMassCutForOniaMMCentral *
+    dimuonMassCutFilterForOniaMMCentral
     )

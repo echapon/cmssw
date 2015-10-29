@@ -15,24 +15,24 @@ primaryVertexFilterForZMM = cms.EDFilter("VertexSelector",
     )
 
 # selection of dimuons (at least STA+STA) with mass in Z range
-muonSelector = cms.EDFilter("MuonSelector",
+muonSelectorForZMM = cms.EDFilter("MuonSelector",
     src = cms.InputTag("muons"),
     cut = cms.string("(isTrackerMuon && isGlobalMuon) && pt > 10."),
     filter = cms.bool(True)
     )
 
-muonFilter = cms.EDFilter("MuonCountFilter",
+muonFilterForZMM = cms.EDFilter("MuonCountFilter",
     src = cms.InputTag("muonSelector"),
     minNumber = cms.uint32(2)
     )
 
-dimuonMassCut = cms.EDProducer("CandViewShallowCloneCombiner",
+dimuonMassCutForZMM = cms.EDProducer("CandViewShallowCloneCombiner",
     checkCharge = cms.bool(True),
     cut = cms.string(' 80 < mass < 110'),
     decay = cms.string("muonSelector@+ muonSelector@-")
     )
 
-dimuonMassCutFilter = cms.EDFilter("CandViewCountFilter",
+dimuonMassCutFilterForZMM = cms.EDFilter("CandViewCountFilter",
     src = cms.InputTag("dimuonMassCut"),
     minNumber = cms.uint32(1)
     )
@@ -41,8 +41,8 @@ dimuonMassCutFilter = cms.EDFilter("CandViewCountFilter",
 zMMSkimSequence = cms.Sequence(
     hltZMMHI *
     primaryVertexFilterForZMM *
-    muonSelector *
-    muonFilter *
-    dimuonMassCut *
-    dimuonMassCutFilter
+    muonSelectorForZMM *
+    muonFilterForZMM *
+    dimuonMassCutForZMM *
+    dimuonMassCutFilterForZMM
     )
