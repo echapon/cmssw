@@ -22,18 +22,18 @@ muonSelectorForZMM = cms.EDFilter("MuonSelector",
     )
 
 muonFilterForZMM = cms.EDFilter("MuonCountFilter",
-    src = cms.InputTag("muonSelector"),
+    src = cms.InputTag("muonSelectorForZMM"),
     minNumber = cms.uint32(2)
     )
 
 dimuonMassCutForZMM = cms.EDProducer("CandViewShallowCloneCombiner",
     checkCharge = cms.bool(True),
     cut = cms.string(' 80 < mass < 110'),
-    decay = cms.string("muonSelector@+ muonSelector@-")
+    decay = cms.string("muonSelectorForZMM@+ muonSelectorForZMM@-")
     )
 
 dimuonMassCutFilterForZMM = cms.EDFilter("CandViewCountFilter",
-    src = cms.InputTag("dimuonMassCut"),
+    src = cms.InputTag("dimuonMassCutForZMM"),
     minNumber = cms.uint32(1)
     )
 
