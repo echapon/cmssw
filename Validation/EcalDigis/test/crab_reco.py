@@ -16,7 +16,7 @@ if runEmulator:
 else:
    runEmulStr = 'noEmul'
 
-config.General.requestName = 'ECAL_%s_%s_%s_20170830' % (dataset, trigger, runEmulStr)
+config.General.requestName = 'ECAL_%s_%s_%s_20170908' % (dataset, trigger, runEmulStr)
 config.General.workArea = 'crab_projects'
 config.General.transferOutputs = True
 config.General.transferLogs = False
@@ -41,7 +41,7 @@ config.Data.runRange = runRange
 # config.Data.outLFNDirBase = '/store/user/echapon/ECAL_studies' 
 config.Data.outLFNDirBase = '/store/group/phys_heavyions/dileptons/echapon/ECAL_studies/DQM/' 
 config.Data.publication = True
-config.Data.outputDatasetTag = 'reco_%s_%s_%s_20170804' % (dataset, trigger, runEmulStr)
+config.Data.outputDatasetTag = 'reco_%s_%s_%s_20170908' % (dataset, trigger, runEmulStr)
 
 config.Site.storageSite = 'T2_CH_CERN'
 # config.Site.storageSite = 'T2_FR_GRIF_LLR'

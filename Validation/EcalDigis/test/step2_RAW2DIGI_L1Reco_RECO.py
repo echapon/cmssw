@@ -17,7 +17,7 @@ emulScenario = 2016
 
 # MASTER SWICTH
 dataset = 'HIPhoton40AndZ'
-runEmulator = False
+runEmulator = True
 emulScenario = 2016
 # dataset = 'HIEWQExo'
 >>>>>>> e0e59d06736... Add modified files
@@ -658,6 +658,7 @@ def massReplaceInputTagUntracked(process,old="rawDataCollector",new="rawDataRepa
 #########################################################################
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 if runEmulator:
    if doFullDQM:
       massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,"ecalDigis","simEcalDigis")
@@ -695,6 +696,24 @@ for s in ["EcalIntegrityBlockSizeErrors", "EcalIntegrityChIdErrors", "EcalIntegr
    massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.InputTag("ecalDigis",s),cms.InputTag("simEcalDigis",s))
    massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.untracked.InputTag("ecalDigis",s),cms.untracked.InputTag("simEcalDigis",s))
    massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.untracked.InputTag("ecalDigis",s),cms.untracked.InputTag("simEcalDigis",s))
+=======
+if runEmulator:
+   massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,"ecalDigis","simEcalDigis")
+   massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,"ecalDigis","simEcalDigis")
+   massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.InputTag("ecalDigis"),cms.InputTag("simEcalDigis"))
+   massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.InputTag("ecalDigis"),cms.InputTag("simEcalDigis"))
+   massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.untracked.InputTag("ecalDigis"),cms.untracked.InputTag("simEcalDigis"))
+   massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.untracked.InputTag("ecalDigis"),cms.untracked.InputTag("simEcalDigis"))
+   for s in ["ebDigis", "eeDigis"]:
+      massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.InputTag("ecalDigis",s),cms.InputTag("simEcalDigis",s))
+      massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.InputTag("ecalDigis",s),cms.InputTag("simEcalDigis",s))
+      massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.untracked.InputTag("ecalDigis",s),cms.untracked.InputTag("simEcalDigis",s))
+      massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.untracked.InputTag("ecalDigis",s),cms.untracked.InputTag("simEcalDigis",s))
+
+   # exceptions
+   process.ecalDetIdToBeRecovered.ebSrFlagCollection = cms.InputTag("ecalDigis")
+   process.ecalDetIdToBeRecovered.eeSrFlagCollection = cms.InputTag("ecalDigis")
+>>>>>>> a5dc33a7c09... Back to ecalDigis in a few places
 
 # Automatic addition of the customisation function from Configuration.DataProcessing.Utils
 from Configuration.DataProcessing.Utils import addMonitoring 
