@@ -85,11 +85,15 @@ process.load('DQMOffline.Configuration.DQMOfflineHeavyIons_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
+<<<<<<< HEAD
     input = cms.untracked.int32(30)
 <<<<<<< HEAD
 >>>>>>> e0e59d06736... Add modified files
 =======
 >>>>>>> 5ba0498c373... Some exceptions about ecalDigis
+=======
+    input = cms.untracked.int32(1)
+>>>>>>> cb409f0368f... Commit my latest changes
 )
 
 # Input source
@@ -150,7 +154,8 @@ process.AODoutput = cms.OutputModule("PoolOutputModule",
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(15728640),
     fileName = cms.untracked.string('step2_RAW2DIGI_L1Reco_RECO.root'),
-    outputCommands = process.AODEventContent.outputCommands
+    # outputCommands = process.AODEventContent.outputCommands
+    outputCommands = process.FEVTDEBUGEventContent.outputCommands
 )
 
 process.DQMoutput = cms.OutputModule("DQMRootOutputModule",
@@ -352,6 +357,7 @@ process.load("Validation.EcalDigis.ecalSelectiveReadoutValidation_cfi")
 process.ecalSelectiveReadoutValidation.outputFile = 'srvalid_hists.root'
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 process.ecalSelectiveReadoutValidation.verbose = cms.untracked.bool(True);
 =======
 process.ecalSelectiveReadoutValidation.verbose = cms.untracked.bool(False);
@@ -359,6 +365,9 @@ process.ecalSelectiveReadoutValidation.verbose = cms.untracked.bool(False);
 =======
 process.ecalSelectiveReadoutValidation.verbose = cms.untracked.bool(False);
 >>>>>>> 5ba0498c373... Some exceptions about ecalDigis
+=======
+process.ecalSelectiveReadoutValidation.verbose = cms.untracked.bool(True);
+>>>>>>> cb409f0368f... Commit my latest changes
 
 #INPUTS:
 process.ecalSelectiveReadoutValidation.EbUnsuppressedDigiCollection = cms.InputTag("simEcalUnsuppressedDigis")
@@ -385,14 +394,20 @@ else:
    # process.ecalSelectiveReadoutValidation.TrigPrimCollection = cms.InputTag("ecalDigis", "EcalTriggerPrimitives")
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> cb409f0368f... Commit my latest changes
 
    from SimCalorimetry.EcalSimProducers.ecaldigi_cfi import *
    from SimCalorimetry.EcalSelectiveReadoutProducers.ecalDigis_cfi import *
 
+<<<<<<< HEAD
 =======
 >>>>>>> e0e59d06736... Add modified files
 =======
 >>>>>>> 5ba0498c373... Some exceptions about ecalDigis
+=======
+>>>>>>> cb409f0368f... Commit my latest changes
    if emulScenario == 2016:
       process.ecalSelectiveReadoutValidation.ebZsThrADCCount = 4.5
       process.ecalSelectiveReadoutValidation.eeZsThrADCCount = 6.5
@@ -541,6 +556,7 @@ process.p1 = cms.Path(
 if runEmulator:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
    process.simEcalDigis.trigPrimBypass = cms.bool(True) # uncomment to bypass
    process.simEcalDigis.trigPrimBypassMode = cms.int32(1) #bypass mode (uncomment)
 =======
@@ -554,16 +570,24 @@ if runEmulator:
 >>>>>>> e0e59d06736... Add modified files
 =======
 >>>>>>> 5ba0498c373... Some exceptions about ecalDigis
+=======
+   process.simEcalDigis.trigPrimBypass = cms.bool(True) # uncomment to bypass
+   process.simEcalDigis.trigPrimBypassMode = cms.int32(1) #bypass mode (uncomment)
+>>>>>>> cb409f0368f... Commit my latest changes
    # # process.simEcalDigis.trigPrimBypassLTH = cms.double(5.)# 2xGeV
    # # process.simEcalDigis.trigPrimBypassHTH = cms.double(11.)# 2xGeV
    #switch to apply selective readout decision on the digis and produce
    process.simEcalDigis.produceDigis = cms.untracked.bool(True)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> cb409f0368f... Commit my latest changes
    # process.simEcalTriggerPrimitiveDigis.Label = cms.string('simEcalUnsuppressedDigis')
    # process.simEcalTriggerPrimitiveDigis.Label = cms.string('simEcalEBunpacker')
    # process.simEcalTriggerPrimitiveDigis.InstanceEB = cms.string('simEcalDigis')
    # process.simEcalTriggerPrimitiveDigis.InstanceEE = cms.string('simEcalDigis')
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> 5ba0498c373... Some exceptions about ecalDigis
@@ -575,6 +599,8 @@ if runEmulator:
 >>>>>>> e0e59d06736... Add modified files
 =======
 >>>>>>> 5ba0498c373... Some exceptions about ecalDigis
+=======
+>>>>>>> cb409f0368f... Commit my latest changes
 
 # # customise for PbPb (not needed thanks to the --repacked option in the cmsDriver command
 # process.ecalEBunpacker.InputLabel = cms.InputTag('rawDataRepacker')

@@ -28,7 +28,7 @@ process.maxEvents = cms.untracked.PSet(
 
 # Input source
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('file:/eos/cms/store/group/phys_heavyions/dileptons/echapon/ECAL_studies/Pythia6_Dijet30_pp502_Hydjet_Cymbal_MB/ECAL_MC_dijet30_digi_reEmul_scenar2016_20170901/170901_122748/0000/step2_DIGI_L1_DIGI2RAW_HLT_PU_12.root'),
+    fileNames = cms.untracked.vstring('file:step3mc_DIGI2RAW.root'),
     secondaryFileNames = cms.untracked.vstring()
 )
 

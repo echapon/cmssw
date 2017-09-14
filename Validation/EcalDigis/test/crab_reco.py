@@ -3,7 +3,7 @@ config = config()
 
 dataset = 'HIPhoton40AndZ'
 # dataset = 'HIEWQExo'
-runEmulator = False
+runEmulator = True
 emulScenario = 2016
 runRange = '262921'
 # for MB: 262784; for HIHardProbes (doesn't work?) 263604; for HIEWQExo: 263614; for HIPhoton40AndZ: 262921
