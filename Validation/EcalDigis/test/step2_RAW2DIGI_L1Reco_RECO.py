@@ -36,7 +36,7 @@ process.load('DQMOffline.Configuration.DQMOfflineHeavyIons_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(30)
+    input = cms.untracked.int32(1)
 )
 
 # Input source
@@ -68,7 +68,8 @@ process.AODoutput = cms.OutputModule("PoolOutputModule",
     ),
     eventAutoFlushCompressedSize = cms.untracked.int32(15728640),
     fileName = cms.untracked.string('step2_RAW2DIGI_L1Reco_RECO.root'),
-    outputCommands = process.AODEventContent.outputCommands
+    # outputCommands = process.AODEventContent.outputCommands
+    outputCommands = process.FEVTDEBUGEventContent.outputCommands
 )
 
 process.DQMoutput = cms.OutputModule("DQMRootOutputModule",
@@ -241,7 +242,7 @@ process.simEcalDigis.EESRPdigiCollection = cms.string('SReeDigis')#output Digis 
 #
 process.load("Validation.EcalDigis.ecalSelectiveReadoutValidation_cfi")
 process.ecalSelectiveReadoutValidation.outputFile = 'srvalid_hists.root'
-process.ecalSelectiveReadoutValidation.verbose = cms.untracked.bool(False);
+process.ecalSelectiveReadoutValidation.verbose = cms.untracked.bool(True);
 
 #INPUTS:
 process.ecalSelectiveReadoutValidation.EbUnsuppressedDigiCollection = cms.InputTag("simEcalUnsuppressedDigis")
@@ -266,6 +267,10 @@ else:
    process.ecalSelectiveReadoutValidation.EeSrFlagCollection = cms.InputTag("simEcalDigis","eeSrFlags")#input
    process.ecalSelectiveReadoutValidation.TrigPrimCollection = cms.InputTag("simEcalDigis", "simEcalTriggerPrimitives")
    # process.ecalSelectiveReadoutValidation.TrigPrimCollection = cms.InputTag("ecalDigis", "EcalTriggerPrimitives")
+
+   from SimCalorimetry.EcalSimProducers.ecaldigi_cfi import *
+   from SimCalorimetry.EcalSelectiveReadoutProducers.ecalDigis_cfi import *
+
    if emulScenario == 2016:
       process.ecalSelectiveReadoutValidation.ebZsThrADCCount = 4.5
       process.ecalSelectiveReadoutValidation.eeZsThrADCCount = 6.5
@@ -390,18 +395,16 @@ process.p1 = cms.Path(
 # to work you need (1) to uncomment the bypass flags below,
 # (2) you need to uncomment the 4 lines above (see "turn on the emulator" above)
 if runEmulator:
-   from SimCalorimetry.EcalSimProducers.ecaldigi_cfi import *
-   from SimCalorimetry.EcalSelectiveReadoutProducers.ecalDigis_cfi import *
-   # process.simEcalDigis.trigPrimBypass = cms.bool(True) # uncomment to bypass
-   # process.simEcalDigis.trigPrimBypassMode = cms.int32(1) #bypass mode (uncomment)
+   process.simEcalDigis.trigPrimBypass = cms.bool(True) # uncomment to bypass
+   process.simEcalDigis.trigPrimBypassMode = cms.int32(1) #bypass mode (uncomment)
    # # process.simEcalDigis.trigPrimBypassLTH = cms.double(5.)# 2xGeV
    # # process.simEcalDigis.trigPrimBypassHTH = cms.double(11.)# 2xGeV
    #switch to apply selective readout decision on the digis and produce
    process.simEcalDigis.produceDigis = cms.untracked.bool(True)
-   # process.simEcalTriggerPrimitiveDigis.Label = cms.string('ecalUnsuppressedDigis')
-   # process.simEcalTriggerPrimitiveDigis.Label = cms.string('ecalEBunpacker')
-   # process.simEcalTriggerPrimitiveDigis.InstanceEB = cms.string('ecalDigis')
-   # process.simEcalTriggerPrimitiveDigis.InstanceEE = cms.string('ecalDigis')
+   # process.simEcalTriggerPrimitiveDigis.Label = cms.string('simEcalUnsuppressedDigis')
+   # process.simEcalTriggerPrimitiveDigis.Label = cms.string('simEcalEBunpacker')
+   # process.simEcalTriggerPrimitiveDigis.InstanceEB = cms.string('simEcalDigis')
+   # process.simEcalTriggerPrimitiveDigis.InstanceEE = cms.string('simEcalDigis')
 
 # # customise for PbPb (not needed thanks to the --repacked option in the cmsDriver command
 # process.ecalEBunpacker.InputLabel = cms.InputTag('rawDataRepacker')
