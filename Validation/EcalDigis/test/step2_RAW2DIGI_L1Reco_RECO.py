@@ -672,6 +672,7 @@ process.schedule = cms.Schedule(process.p1
 
 if (doReco or doFullDQM):
 <<<<<<< HEAD
+<<<<<<< HEAD
    process.schedule.append(process.raw2digi_step)
    process.schedule.append(process.L1Reco_step)
    process.schedule.append(process.reconstruction_step)
@@ -683,6 +684,14 @@ if doFullDQM:
 if doFullDQM:
    process.schedule.append(process.dqmoffline_step,process.DQMoutput_step)
 >>>>>>> 8c3ceb5cbb3... Add flags
+=======
+   process.schedule.append(process.raw2digi_step)
+   process.schedule.append(process.L1Reco_step)
+   process.schedule.append(process.reconstruction_step)
+if doFullDQM:
+   process.schedule.append(process.dqmoffline_step)
+   process.schedule.append(process.DQMoutput_step)
+>>>>>>> 09d1e964060... Fix cms.schedule extension
 if doReco:
    process.schedule.append(process.AODoutput_step)
 
