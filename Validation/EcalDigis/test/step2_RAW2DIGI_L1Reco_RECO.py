@@ -442,12 +442,18 @@ process.schedule = cms.Schedule(process.p1
       # process.dqmoffline_step,process.DQMoutput_step)
 
 if (doReco or doFullDQM):
+<<<<<<< HEAD
    process.schedule.append(process.raw2digi_step)
    process.schedule.append(process.L1Reco_step)
    process.schedule.append(process.reconstruction_step)
 if doFullDQM:
    process.schedule.append(process.dqmoffline_step)
    process.schedule.append(process.DQMoutput_step)
+=======
+   process.schedule.append(process.raw2digi_step,process.L1Reco_step,process.reconstruction_step)
+if doFullDQM:
+   process.schedule.append(process.dqmoffline_step,process.DQMoutput_step)
+>>>>>>> 8c3ceb5cbb3... Add flags
 if doReco:
    process.schedule.append(process.AODoutput_step)
 
