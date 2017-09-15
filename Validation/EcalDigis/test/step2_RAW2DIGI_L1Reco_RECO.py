@@ -5,17 +5,26 @@
 # with command line options: step2 --process RECO --repacked --conditions 75X_dataRun2_PromptHI_v3 --scenario HeavyIons -s RAW2DIGI,L1Reco,RECO --datatier AOD --customise Configuration/DataProcessing/RecoTLR.customiseRun2CommonHI --data --eventcontent AOD --no_exec --filein /store/hidata/HIRun2015/HIMinimumBias1/RAW/v1/000/262/703/00000/D0A0C193-DB94-E511-B5C4-02163E011FB1.root
 import FWCore.ParameterSet.Config as cms
 
+#######################################################
+# MASTER SWICTHes
+#######################################################
 
-# MASTER SWICTH
 dataset = 'HIPhoton40AndZ'
-runEmulator = True
+runEmulator = False
 emulScenario = 2016
-# dataset = 'HIEWQExo'
 trigger = '' # 'HLT_HIFullTrack12_L1Centrality010_v2' # 'HLT_L1MinimumBiasHF1OR_v1' # 'HLT_HIL1Tech7_NoBPTX_v1'
 # trigger = 'HLT_HIL1Centralityext50100MinimumumBiasHF2AND_v1'
 # HLTPaths = ['HLT_HIL1Centralityext50100MinimumumBiasHF2AND_v1'], # (300Hz, fed into MinimumBias1)
 # HLTPaths = ['HLT_HIL1MinimumBiasHF1ANDPixel_SingleTrack_v1'], #  (3Hz, fed into MinimumBias1)
 # HLTPaths = ['HLT_HIUCC020_v3'], # UCC 3Hz
+nEvents = 300
+
+doReco = False       # do we want to get a reco file?
+doFullDQM  = False       # do we want to get a detailed DQM file?
+# note: if we don't want reco neither DQM, we'll assume we'll just run the ECAL re-emulation validation, which is also DQM but a small file
+doECALvalid = (not doReco) and (not doFullDQM)
+
+#######################################################
 
 process = cms.Process('RECO')
 process.options = cms.untracked.PSet( allowUnscheduled = cms.untracked.bool(True) )
@@ -32,11 +41,20 @@ process.load('Configuration.StandardSequences.L1Reco_cff')
 process.load('Configuration.StandardSequences.ReconstructionHeavyIons_cff')
 # process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('CommonTools.ParticleFlow.EITopPAG_cff')
-process.load('DQMOffline.Configuration.DQMOfflineHeavyIons_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
+if doFullDQM:
+   process.load('DQMOffline.Configuration.DQMOfflineHeavyIons_cff')
+if doECALvalid:
+   # DQM services
+   process.load("DQMServices.Core.DQM_cfg")
+   process.load("DQMServices.Components.DQMEnvironment_cfi")
+   process.dqmSaver.workflow = "/HIRun2015/Commissioning/RAW"
+   #process.load("CalibCalorimetry.Configuration.Ecal_FakeConditions_cff")
+   #process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
+   process.load("DQM.Integration.config.FrontierCondition_GT_Offline_cfi")
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(1)
+    input = cms.untracked.int32(nEvents)
 )
 
 # Input source
@@ -59,28 +77,30 @@ process.configurationMetadata = cms.untracked.PSet(
 
 # Output definition
 
-process.AODoutput = cms.OutputModule("PoolOutputModule",
-    compressionAlgorithm = cms.untracked.string('LZMA'),
-    compressionLevel = cms.untracked.int32(4),
-    dataset = cms.untracked.PSet(
-        dataTier = cms.untracked.string('AOD'),
-        filterName = cms.untracked.string('')
-    ),
-    eventAutoFlushCompressedSize = cms.untracked.int32(15728640),
-    fileName = cms.untracked.string('step2_RAW2DIGI_L1Reco_RECO.root'),
-    # outputCommands = process.AODEventContent.outputCommands
-    outputCommands = process.FEVTDEBUGEventContent.outputCommands
-)
+if doReco:
+   process.AODoutput = cms.OutputModule("PoolOutputModule",
+       compressionAlgorithm = cms.untracked.string('LZMA'),
+       compressionLevel = cms.untracked.int32(4),
+       dataset = cms.untracked.PSet(
+           dataTier = cms.untracked.string('AOD'),
+           filterName = cms.untracked.string('')
+       ),
+       eventAutoFlushCompressedSize = cms.untracked.int32(15728640),
+       fileName = cms.untracked.string('step2_RAW2DIGI_L1Reco_RECO.root'),
+       # outputCommands = process.AODEventContent.outputCommands
+       outputCommands = process.FEVTDEBUGEventContent.outputCommands
+   )
 
-process.DQMoutput = cms.OutputModule("DQMRootOutputModule",
-    dataset = cms.untracked.PSet(
-        dataTier = cms.untracked.string('DQMIO'),
-        filterName = cms.untracked.string('')
-    ),
-    fileName = cms.untracked.string('step2_RAW2DIGI_L1Reco_RECO_EI_DQM_inDQM.root'),
-    outputCommands = process.DQMEventContent.outputCommands,
-    splitLevel = cms.untracked.int32(0)
-)
+if doFullDQM:
+   process.DQMoutput = cms.OutputModule("DQMRootOutputModule",
+       dataset = cms.untracked.PSet(
+           dataTier = cms.untracked.string('DQMIO'),
+           filterName = cms.untracked.string('')
+       ),
+       fileName = cms.untracked.string('step2_RAW2DIGI_L1Reco_RECO_EI_DQM_inDQM.root'),
+       outputCommands = process.DQMEventContent.outputCommands,
+       splitLevel = cms.untracked.int32(0)
+   )
 
 # Additional output definition
 
@@ -94,9 +114,11 @@ process.L1Reco_step = cms.Path(process.L1Reco)
 process.reconstruction_step = cms.Path(process.reconstructionHeavyIons)
 # process.endjob_step = cms.EndPath(process.endOfProcess)
 process.eventinterpretaion_step = cms.Path(process.EIsequence)
-process.dqmoffline_step = cms.Path(process.DQMOfflineHeavyIons)
-process.AODoutput_step = cms.EndPath(process.AODoutput)
-process.DQMoutput_step = cms.EndPath(process.DQMoutput)
+if doFullDQM:
+   process.dqmoffline_step = cms.Path(process.DQMOfflineHeavyIons)
+   process.DQMoutput_step = cms.EndPath(process.DQMoutput)
+if doReco:
+   process.AODoutput_step = cms.EndPath(process.AODoutput)
 
 # initialize  MessageLogger
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
@@ -115,13 +137,6 @@ process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 #process.load("Geometry.EcalMapping.EcalMapping_cfi")
 #process.load("Geometry.EcalMapping.EcalMappingRecord_cfi")
 
-# DQM services
-# process.load("DQMServices.Core.DQM_cfg")
-# process.load("DQMServices.Components.DQMEnvironment_cfi")
-# process.dqmSaver.workflow = "/HIRun2015/Commissioning/RAW"
-# #process.load("CalibCalorimetry.Configuration.Ecal_FakeConditions_cff")
-# #process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
-# process.load("DQM.Integration.config.FrontierCondition_GT_Offline_cfi")
 
 # Local database for emulator setup (to change ZS thresholds!)
 #----------------------------------------------------------------------
@@ -373,12 +388,19 @@ process.TriggerSelectionSequence = cms.Sequence(
       process.TriggerFilter
       )
 
-process.p1 = cms.Path(
-      process.ecalEBunpacker
-      # *process.simEcalTriggerPrimitiveDigis
-      *process.simEcalDigis*process.ecalSelectiveReadoutValidation
-      # *process.dqmSaver
-      )
+if doECALvalid:
+   process.p1 = cms.Path(
+         process.ecalEBunpacker
+         # *process.simEcalTriggerPrimitiveDigis
+         *process.simEcalDigis*process.ecalSelectiveReadoutValidation
+         *process.dqmSaver
+         )
+else:
+   process.p1 = cms.Path(
+         process.ecalEBunpacker
+         # *process.simEcalTriggerPrimitiveDigis
+         *process.simEcalDigis*process.ecalSelectiveReadoutValidation
+         )
 
 # if trigger != '':
 #    process.p1 = cms.Path(
@@ -412,10 +434,19 @@ if runEmulator:
 ###############################################
 # Schedule definition
 # process.schedule = cms.Schedule(process.p1,process.raw2digi_step,process.L1Reco_step,process.reconstruction_step,process.endjob_step,process.AODoutput_step)
-process.schedule = cms.Schedule(process.p1,process.raw2digi_step,process.L1Reco_step,process.reconstruction_step,
+process.schedule = cms.Schedule(process.p1
+      # ,process.raw2digi_step,process.L1Reco_step,process.reconstruction_step,
       # process.eventinterpretaion_step,
-      process.dqmoffline_step,process.AODoutput_step,process.DQMoutput_step)
+      # process.dqmoffline_step,process.AODoutput_step,process.DQMoutput_step
+      )
       # process.dqmoffline_step,process.DQMoutput_step)
+
+if (doReco or doFullDQM):
+   process.schedule.append(process.raw2digi_step,process.L1Reco_step,process.reconstruction_step)
+if doFullDQM:
+   process.schedule.append(process.dqmoffline_step,process.DQMoutput_step)
+if doReco:
+   process.schedule.append(process.AODoutput_step)
 
 # customisation of the process.
 
@@ -520,17 +551,21 @@ def massReplaceInputTagUntracked(process,old="rawDataCollector",new="rawDataRepa
 #########################################################################
 
 if runEmulator:
-   massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,"ecalDigis","simEcalDigis")
-   massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,"ecalDigis","simEcalDigis")
-   massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.InputTag("ecalDigis"),cms.InputTag("simEcalDigis"))
-   massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.InputTag("ecalDigis"),cms.InputTag("simEcalDigis"))
-   massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.untracked.InputTag("ecalDigis"),cms.untracked.InputTag("simEcalDigis"))
-   massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.untracked.InputTag("ecalDigis"),cms.untracked.InputTag("simEcalDigis"))
+   if doFullDQM:
+      massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,"ecalDigis","simEcalDigis")
+      massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.InputTag("ecalDigis"),cms.InputTag("simEcalDigis"))
+      massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.untracked.InputTag("ecalDigis"),cms.untracked.InputTag("simEcalDigis"))
+   if doFullDQM or doReco:
+      massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,"ecalDigis","simEcalDigis")
+      massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.InputTag("ecalDigis"),cms.InputTag("simEcalDigis"))
+      massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.untracked.InputTag("ecalDigis"),cms.untracked.InputTag("simEcalDigis"))
    for s in ["ebDigis", "eeDigis"]:
-      massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.InputTag("ecalDigis",s),cms.InputTag("simEcalDigis",s))
-      massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.InputTag("ecalDigis",s),cms.InputTag("simEcalDigis",s))
-      massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.untracked.InputTag("ecalDigis",s),cms.untracked.InputTag("simEcalDigis",s))
-      massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.untracked.InputTag("ecalDigis",s),cms.untracked.InputTag("simEcalDigis",s))
+      if doFullDQM:
+         massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.InputTag("ecalDigis",s),cms.InputTag("simEcalDigis",s))
+         massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.untracked.InputTag("ecalDigis",s),cms.untracked.InputTag("simEcalDigis",s))
+      if doFullDQM or doReco:
+         massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.untracked.InputTag("ecalDigis",s),cms.untracked.InputTag("simEcalDigis",s))
+         massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.InputTag("ecalDigis",s),cms.InputTag("simEcalDigis",s))
 
    # revert in a few places
    process.ecalDetIdToBeRecovered.ebSrFlagCollection = cms.InputTag("ecalDigis")
