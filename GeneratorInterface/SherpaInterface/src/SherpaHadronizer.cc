@@ -74,6 +74,7 @@ private:
   bool isRNGinitialized;
   std::vector<std::string> weightlist;
   std::vector<std::string> variationweightlist;
+  bool doShortHepMC;
 };
 
 
@@ -129,6 +130,8 @@ SherpaHadronizer::SherpaHadronizer(const edm::ParameterSet &params) :
     else SherpaDefaultWeight=params.getParameter<double>("SherpaDefaultWeight");
   if (!params.exists("maxEventsToPrint")) maxEventsToPrint=0;
     else maxEventsToPrint=params.getParameter<int>("maxEventsToPrint");
+  if (!params.exists("doShortHepMC")) doShortHepMC=false;
+    else doShortHepMC=params.getParameter<bool>("doShortHepMC");
 // if hepmcextendedweights is used the event weights have to be reordered ( unordered list can be accessed via event->weights().write() )
 // two lists have to be provided:
 // 1) SherpaWeights
@@ -262,7 +265,7 @@ bool SherpaHadronizer::generatePartonsAndHadronize()
   if (rc) {
     //convert it to HepMC2
     auto evt = std::make_unique<HepMC::GenEvent>();
-    Generator->FillHepMCEvent(*evt);
+    Generator->FillHepMCEvent(*evt,doShortHepMC);
 
     // in case of unweighted events sherpa puts the max weight as event weight.
     // this is not optimal, we want 1 for unweighted events, so we check
