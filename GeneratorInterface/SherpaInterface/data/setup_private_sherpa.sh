@@ -12,7 +12,7 @@ export SRT_SHERPA_LIBRARY_PATH_SCRAMRTDEL=${mysherpa}/lib/SHERPA-MC
 export SHERPA_SHARE_PATH=${mysherpa}/share/SHERPA-MC
 
 # configuration files
-configfiles="../.SCRAM/slc7_amd64_gcc820/MakeData/variables.mk ../.SCRAM/slc7_amd64_gcc820/MakeData/Tools/sherpa.mk ../.SCRAM/slc7_amd64_gcc820/MakeData/Tools.mk ../config/toolbox/slc7_amd64_gcc820/tools/selected/sherpa.xml ../external/slc7_amd64_gcc820/links.DB"
+configfiles="../config/toolbox/slc7_amd64_gcc820/tools/selected/sherpa.xml"
 origsherpa_p=$(echo $origsherpa | sed 's/\//\\\//g')
 mysherpa_p=$(echo $mysherpa | sed 's/\//\\\//g')
 for file in $configfiles; do
