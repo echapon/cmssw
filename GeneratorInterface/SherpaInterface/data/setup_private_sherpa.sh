@@ -1,7 +1,7 @@
 #!/bin/bash
 
 origsherpa="/cvmfs/cms.cern.ch/slc7_amd64_gcc820/external/sherpa/2.2.8-pafccj2"
-mysherpa="/afs/cern.ch/user/e/echapon/workspace/private/Sherpa/CMSSW_10_6_7/sherpa"
+mysherpa="${CMSSW_BASE}/sherpa-install"
 
 # environment variables
 export SHERPA_INCLUDE_PATH=${mysherpa}/include/SHERPA-MC
