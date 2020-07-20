@@ -263,7 +263,7 @@ void GenParticleProducer::produce( StreamID, Event& evt, const EventSetup& es ) 
 	offset += num_particles;
      }
   }else{
-     auto origin = (*mc->vertices_begin())->position();
+   HepMC::FourVector origin = (mc->vertices_begin() != mc->vertices_end()) ? (*mc->vertices_begin())->position() : HepMC::FourVector(0,0,0,0);
      xyz0Ptr->SetXYZ(origin.x() * mmToCm, origin.y() * mmToCm, origin.z() * mmToCm);
      *t0Ptr = origin.t() * mmToNs;
      fillIndices(mc, particles, *barCodeVector, 0,barcodes);
