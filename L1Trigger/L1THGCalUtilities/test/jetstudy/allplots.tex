@@ -1,0 +1,3277 @@
+\documentclass[8pt]{beamer}
+
+\usepackage{ucs}
+\usepackage[utf8]{inputenc}
+% \usepackage{beamerthemebars}
+% \usepackage{beamerthemeplain}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphics}
+
+\usetheme{CNRScolors}
+% \setbeamertemplate{navigation symbols}{\insertframenumber}
+\setbeamertemplate{navigation symbols}{}
+
+\author{E. Chapon}
+\date{Sep. 9, 2020}
+
+\graphicspath{{./plots/rphi_thr6p5/}{./plots/}{./}}
+
+\begin{document}
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents
+\end{frame}
+
+\section{General considerations}
+
+% \subsection{Introduction}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+
+\begin{frame}
+ \frametitle{Introduction}
+ 
+ These slides are a ``dump'' of jets built from HGCAL primitives. All jets are anti-kt $R=0.4$ jets built using the FastJet library. They are presented for the following combination of settings:
+ 
+ \begin{itemize}
+  \item 2 samples: quark gun, VBF Higgs to invisible 
+  \item jets built from 3 sets of inputs: clusters, clusters together with towers built from unclustered energy, towers built from the full energy (not only unclustered)
+  \item 3 pileup settings: no PU, PU200, ``PU200 (sub)'' (using FastJet's built-in ``GridMedianBackgroundEstimator'', with a grid spacing of 0.5, with the same input collection as the jets considered)
+  \item without and with jet energy corrections (2 sections in these slides)
+ \end{itemize}
+
+\end{frame}
+
+
+% \subsection{Distributions}
+
+% \begin{frame}
+%  \frametitle{Table of contents}
+%  
+%  \tableofcontents[currentsection,currentsubsection]
+% \end{frame}
+
+\begin{frame}
+ \frametitle{Distributions}
+ 
+ \includegraphics[width=0.32\textwidth]{canv_dist_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40.pdf}
+ \includegraphics[width=0.32\textwidth]{canv_dist_abseta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40.pdf}
+ \includegraphics[width=0.32\textwidth]{canv_dist_phi_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40.pdf}
+\end{frame}
+
+\section{Plots with raw reconstructed jet $p_{T}$}
+
+\subsection{Efficiencies}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+
+ \begin{frame}
+  \frametitle{Efficiency vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{eff/canv_VBF_HToInvisible_noPU_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{eff/canv_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{eff/canv_VBF_HToInvisible_PU200_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{eff/canv_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{eff/canv_VBF_HToInvisible_PUsub_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{eff/canv_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+ \begin{frame}
+  \frametitle{Efficiency vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{eff/canv_VBF_HToInvisible_noPU_abseta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{eff/canv_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{eff/canv_VBF_HToInvisible_PU200_abseta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{eff/canv_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{eff/canv_VBF_HToInvisible_PUsub_abseta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{eff/canv_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \subsection{Scales}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+
+ \begin{frame}
+  \frametitle{pt scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{eta scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{eta scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+ \subsection{Resolutions}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt resolution, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt resolution, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{eta resolution, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{eta resolution, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+
+ \subsection{Scales (from fits)}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+
+ \begin{frame}
+  \frametitle{pt scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{eta scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{eta scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+ \subsection{Resolutions (from fits)}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt resolution, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt resolution, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{eta resolution, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{eta resolution, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+ 
+ 
+  \subsection{Example fits (for scale and resolution, for cluster jets)}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+
+ \begin{frame}
+  \frametitle{2D, for pt scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+
+ \begin{frame}
+  \frametitle{pt scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+   \begin{frame}
+  \frametitle{2D, for pt scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+   \begin{frame}
+  \frametitle{2D, for eta scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{eta scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+
+   \begin{frame}
+  \frametitle{2D, for eta scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_clu.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{eta scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_clu_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \subsection{Example fits (for scale and resolution, for clu and tow (unclustered) jets)}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+
+ \begin{frame}
+  \frametitle{2D, for pt scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+ \begin{frame}
+  \frametitle{pt scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+   \begin{frame}
+  \frametitle{2D, for pt scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+   \begin{frame}
+  \frametitle{2D, eta scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{eta scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+   \begin{frame}
+  \frametitle{2D, for eta scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_unclclutow.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{eta scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+ \subsection{Example fits (for scale and resolution, for full tower jets)}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+
+\begin{frame}
+  \frametitle{2D, for pt scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+
+ \begin{frame}
+  \frametitle{pt scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+   \begin{frame}
+  \frametitle{2D, for pt scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+
+   \begin{frame}
+  \frametitle{2D, for eta scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{eta scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+   \begin{frame}
+  \frametitle{2D, for eta scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_2d_fulltow.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{eta scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_none_fit_fulltow_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+ \section{Plots with corrected reconstructed jet $p_{T}$}
+ 
+ \subsection{Description of the correction}
+ 
+ \begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+ 
+ \begin{frame}
+  \frametitle{Description of the correction}
+  
+  \begin{block}{}
+   Corrections applied\footnote{JME-10-011, JINST 6 (2011) 11002}: offset (PU) $C_\text{offset}$ and MC calibration $C_\text{MC}$
+   
+   \begin{itemize}
+    \item \textbf{The offset correction is only applied for "PU200".} For NoPU and PU200 (sub), it is not applied: $C_\text{offset} = 1$.
+    \item \textbf{All corrections are derived using the VBF Hinv sample.}
+   \end{itemize}
+
+  \end{block}
+
+  
+  $$p_\text{T}^\text{cor} = C \cdot p_\text{T}^\text{raw}$$
+  
+  $$C = C_\text{offset} (p_\text{T}^\text{raw}) \cdot C_\text{MC} (C_\text{offset} \cdot p_\text{T}^\text{raw}, \eta)$$
+ \end{frame}
+ 
+ \begin{frame}
+  \frametitle{Offset correction: hybrid jet area method}
+  
+  \begin{center}
+   \includegraphics[width=0.5\textwidth]{rho.pdf}
+  \end{center}
+
+  
+  $$C_\text{offset} = 1 - \frac{\left(\rho - \langle \rho_\text{UE} \rangle \right) \cdot \beta(\eta) \cdot A_j}{p_\text{T}^\text{raw}}$$
+  
+  where
+  
+  \begin{itemize}
+   \item $\rho$ is the event-by-event $p_\text{T}$ density between 1.6 and 2.9 (estimated by FastJet)
+   \item $\langle \rho_\text{UE} \rangle$ is mean value of $\rho$ in events without pileup
+   \item $\beta(\eta)$ is an $\eta$-dependent correction ($\rho$ is independent of $\eta$): see next slide
+   \item $A_j$ is the jet area (given by FastJet)
+  \end{itemize}
+
+ \end{frame}
+ 
+ \begin{frame}
+  \frametitle{$\beta(\eta)$ factor for the hybrid jet area method}
+  
+  All plots from VBF Hinv PU200
+  
+  \vspace{10pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+    \includegraphics[width=\textwidth]{beta_clu.pdf}
+    
+    clusters
+   \end{column}
+   \begin{column}{0.35\textwidth}
+    \includegraphics[width=\textwidth]{beta_clutow.pdf}
+    
+    clusters and uncl. towers
+   \end{column}
+   \begin{column}{0.35\textwidth}
+    \includegraphics[width=\textwidth]{beta_tow.pdf}
+    
+    full towers
+   \end{column}
+  \end{columns}
+  
+  \vspace{10pt}
+  
+  \textbf{To avoid issues in the case of cluster jets, $\beta$ is forced to be positive.} Where the above curve is negative, we set $\beta = 0$.
+ \end{frame}
+
+
+
+ 
+ \begin{frame}
+  \frametitle{Jet response for cluster jets}
+  
+  The jet estimated from a TProfile2D of the jet response, binned in gen jet $p_\text{T}$ and $\eta$. It is then converted into a TGraph2D (black dots), replacing gen $p_\text{T}$ with reco $\langle p_\text{T} \rangle$ in that bin, and interpolated (coloured shades).
+  
+  \vspace{15pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+    \includegraphics[width=\textwidth]{jec_VBF_NoPU_clu.pdf}
+    
+    no PU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+    \includegraphics[width=\textwidth]{jec_VBF_PU200_clu_offset.pdf}
+    
+    PU200 (after offset correction)
+   \end{column}
+   \begin{column}{0.35\textwidth}
+    \includegraphics[width=\textwidth]{jec_VBF_PUsub_clu.pdf}
+    
+    PU200 (sub)
+   \end{column}
+  \end{columns}
+
+ \end{frame}
+ 
+ \begin{frame}
+  \frametitle{Jet response for clu and tow (unclustered) jets}
+  
+  The jet estimated from a TProfile2D of the jet response, binned in gen jet $p_\text{T}$ and $\eta$. It is then converted into a TGraph2D (black dots), replacing gen $p_\text{T}$ with reco $\langle p_\text{T} \rangle$ in that bin, and interpolated (coloured shades).
+  
+  \vspace{15pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+    \includegraphics[width=\textwidth]{jec_VBF_NoPU_unclclutow.pdf}
+    
+    no PU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+    \includegraphics[width=\textwidth]{jec_VBF_PU200_unclclutow_offset.pdf}
+    
+    PU200 (after offset correction)
+   \end{column}
+   \begin{column}{0.35\textwidth}
+    \includegraphics[width=\textwidth]{jec_VBF_PUsub_unclclutow.pdf}
+    
+    PU200 (sub)
+   \end{column}
+  \end{columns}
+
+ \end{frame}
+ 
+ \begin{frame}
+  \frametitle{Jet response for full tower jets}
+  
+  The jet estimated from a TProfile2D of the jet response, binned in gen jet $p_\text{T}$ and $\eta$. It is then converted into a TGraph2D (black dots), replacing gen $p_\text{T}$ with reco $\langle p_\text{T} \rangle$ in that bin, and interpolated (coloured shades).
+  
+  \vspace{15pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+    \includegraphics[width=\textwidth]{jec_VBF_NoPU_fulltow.pdf}
+    
+    no PU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+    \includegraphics[width=\textwidth]{jec_VBF_PU200_fulltow_offset.pdf}
+    
+    PU200 (after offset correction)
+   \end{column}
+   \begin{column}{0.35\textwidth}
+    \includegraphics[width=\textwidth]{jec_VBF_PUsub_fulltow.pdf}
+    
+    PU200 (sub)
+   \end{column}
+  \end{columns}
+
+ \end{frame}
+
+
+
+\subsection{Efficiencies}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+
+ \begin{frame}
+  \frametitle{Efficiency vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{eff/canv_VBF_HToInvisible_noPU_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{eff/canv_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{eff/canv_VBF_HToInvisible_PU200_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{eff/canv_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{eff/canv_VBF_HToInvisible_PUsub_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{eff/canv_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+ \begin{frame}
+  \frametitle{Efficiency vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{eff/canv_VBF_HToInvisible_noPU_abseta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{eff/canv_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{eff/canv_VBF_HToInvisible_PU200_abseta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{eff/canv_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{eff/canv_VBF_HToInvisible_PUsub_abseta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{eff/canv_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \subsection{Scales}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+
+ \begin{frame}
+  \frametitle{pt scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+%   \begin{frame}
+%   \frametitle{eta scale, vs pt}
+%   
+%   \begin{columns}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      VBF H, noPU
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      q gun, noPU
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      VBF H, PU200
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      q gun, PU200
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      VBF H, PU200 (sub)
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      q gun, PU200 (sub)
+%    \end{column}
+%   \end{columns}
+%  \end{frame}
+%  
+%   \begin{frame}
+%   \frametitle{eta scale, vs abseta}
+%   
+%   \begin{columns}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      VBF H, noPU
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      q gun, noPU
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      VBF H, PU200
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      q gun, PU200
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      VBF H, PU200 (sub)
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      q gun, PU200 (sub)
+%    \end{column}
+%   \end{columns}
+%  \end{frame}
+ 
+ \subsection{Resolutions}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt resolution, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt resolution, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+%  
+%   \begin{frame}
+%   \frametitle{eta resolution, vs pt}
+%   
+%   \begin{columns}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      VBF H, noPU
+%     
+%      \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      q gun, noPU
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      VBF H, PU200
+%     
+%      \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      q gun, PU200
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      VBF H, PU200 (sub)
+%     
+%      \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      q gun, PU200 (sub)
+%    \end{column}
+%   \end{columns}
+%  \end{frame}
+%  
+%   \begin{frame}
+%   \frametitle{eta resolution, vs abseta}
+%   
+%   \begin{columns}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      VBF H, noPU
+%     
+%      \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      q gun, noPU
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      VBF H, PU200
+%     
+%      \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      q gun, PU200
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      VBF H, PU200 (sub)
+%     
+%      \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20.pdf}
+%      
+%      q gun, PU200 (sub)
+%    \end{column}
+%   \end{columns}
+%  \end{frame}
+
+ \subsection{Scales (from fits)}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+
+ \begin{frame}
+  \frametitle{pt scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+%   \begin{frame}
+%   \frametitle{eta scale, vs pt}
+%   
+%   \begin{columns}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      VBF H, noPU
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      q gun, noPU
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      VBF H, PU200
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      q gun, PU200
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      VBF H, PU200 (sub)
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      q gun, PU200 (sub)
+%    \end{column}
+%   \end{columns}
+%  \end{frame}
+%  
+%   \begin{frame}
+%   \frametitle{eta scale, vs abseta}
+%   
+%   \begin{columns}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      VBF H, noPU
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      q gun, noPU
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      VBF H, PU200
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      q gun, PU200
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      VBF H, PU200 (sub)
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      q gun, PU200 (sub)
+%    \end{column}
+%   \end{columns}
+%  \end{frame}
+ 
+ \subsection{Resolutions (from fits)}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt resolution, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt resolution, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+%   \begin{frame}
+%   \frametitle{eta resolution, vs pt}
+%   
+%   \begin{columns}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      VBF H, noPU
+%     
+%      \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      q gun, noPU
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      VBF H, PU200
+%     
+%      \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      q gun, PU200
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      VBF H, PU200 (sub)
+%     
+%      \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      q gun, PU200 (sub)
+%    \end{column}
+%   \end{columns}
+%  \end{frame}
+%  
+%   \begin{frame}
+%   \frametitle{eta resolution, vs abseta}
+%   
+%   \begin{columns}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      VBF H, noPU
+%     
+%      \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      q gun, noPU
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      VBF H, PU200
+%     
+%      \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      q gun, PU200
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{resol/canvres_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      VBF H, PU200 (sub)
+%     
+%      \includegraphics[width=\textwidth]{resol/canvres_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit.pdf}
+%      
+%      q gun, PU200 (sub)
+%    \end{column}
+%   \end{columns}
+%  \end{frame}
+ 
+ 
+ 
+ 
+  \subsection{Example fits (for scale and resolution, for cluster jets)}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+
+ \begin{frame}
+  \frametitle{2D, for pt scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_clu.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_clu.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_clu.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_clu.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_clu.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_clu.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+
+ \begin{frame}
+  \frametitle{pt scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+   \begin{frame}
+  \frametitle{2D, for pt scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_clu.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_clu.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_clu.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_clu.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_clu.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_clu.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+%   \begin{frame}
+%   \frametitle{eta scale, vs pt}
+%   
+%   \begin{columns}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+%      
+%      VBF H, noPU
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+%      
+%      q gun, noPU
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+%      
+%      VBF H, PU200
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+%      
+%      q gun, PU200
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+%      
+%      VBF H, PU200 (sub)
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+%      
+%      q gun, PU200 (sub)
+%    \end{column}
+%   \end{columns}
+%  \end{frame}
+%  
+%   \begin{frame}
+%   \frametitle{eta scale, vs abseta}
+%   
+%   \begin{columns}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+%      
+%      VBF H, noPU
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+%      
+%      q gun, noPU
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+%      
+%      VBF H, PU200
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+%      
+%      q gun, PU200
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+%      
+%      VBF H, PU200 (sub)
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_clu_slicenb7.pdf}
+%      
+%      q gun, PU200 (sub)
+%    \end{column}
+%   \end{columns}
+%  \end{frame}
+ 
+  \subsection{Example fits (for scale and resolution, for clu and tow (unclustered) jets)}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+
+ \begin{frame}
+  \frametitle{2D, for pt scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_unclclutow.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_unclclutow.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_unclclutow.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_unclclutow.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_unclclutow.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_unclclutow.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+ \begin{frame}
+  \frametitle{pt scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+   \begin{frame}
+  \frametitle{2D, for pt scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_unclclutow.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_unclclutow.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_unclclutow.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_unclclutow.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_unclclutow.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_unclclutow.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+%   \begin{frame}
+%   \frametitle{eta scale, vs pt}
+%   
+%   \begin{columns}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+%      
+%      VBF H, noPU
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+%      
+%      q gun, noPU
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+%      
+%      VBF H, PU200
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+%      
+%      q gun, PU200
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+%      
+%      VBF H, PU200 (sub)
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+%      
+%      q gun, PU200 (sub)
+%    \end{column}
+%   \end{columns}
+%  \end{frame}
+%  
+%   \begin{frame}
+%   \frametitle{eta scale, vs abseta}
+%   
+%   \begin{columns}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+%      
+%      VBF H, noPU
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+%      
+%      q gun, noPU
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+%      
+%      VBF H, PU200
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+%      
+%      q gun, PU200
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+%      
+%      VBF H, PU200 (sub)
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_unclclutow_slicenb7.pdf}
+%      
+%      q gun, PU200 (sub)
+%    \end{column}
+%   \end{columns}
+%  \end{frame}
+ 
+ \subsection{Example fits (for scale and resolution, for full tower jets)}
+
+\begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+
+ \begin{frame}
+  \frametitle{2D, for pt scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_fulltow.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_fulltow.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_fulltow.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_fulltow.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_fulltow.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_fulltow.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+
+ \begin{frame}
+  \frametitle{pt scale, vs pt}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+   \begin{frame}
+  \frametitle{2D, for pt scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_fulltow.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_fulltow.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_fulltow.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_fulltow.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_fulltow.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_2d_fulltow.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{pt scale, vs abseta}
+  
+  \begin{columns}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, noPU
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+     
+     q gun, noPU
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, PU200
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+     
+     q gun, PU200
+   \end{column}
+   \begin{column}{0.35\textwidth}
+     \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+     
+     VBF H, PU200 (sub)
+    
+     \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_ptcor_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+     
+     q gun, PU200 (sub)
+   \end{column}
+  \end{columns}
+ \end{frame}
+ 
+%   \begin{frame}
+%   \frametitle{eta scale, vs pt}
+%   
+%   \begin{columns}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+%      
+%      VBF H, noPU
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+%      
+%      q gun, noPU
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+%      
+%      VBF H, PU200
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+%      
+%      q gun, PU200
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+%      
+%      VBF H, PU200 (sub)
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_pt_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+%      
+%      q gun, PU200 (sub)
+%    \end{column}
+%   \end{columns}
+%  \end{frame}
+%  
+%   \begin{frame}
+%   \frametitle{eta scale, vs abseta}
+%   
+%   \begin{columns}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+%      
+%      VBF H, noPU
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_noPU_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+%      
+%      q gun, noPU
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+%      
+%      VBF H, PU200
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+%      
+%      q gun, PU200
+%    \end{column}
+%    \begin{column}{0.35\textwidth}
+%      \includegraphics[width=\textwidth]{scale/canvscale_VBF_HToInvisible_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+%      
+%      VBF H, PU200 (sub)
+%     
+%      \includegraphics[width=\textwidth]{scale/canvscale_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PUsub_abseta_eta_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40_recocuts_ptcorGT20_fit_fulltow_slicenb7.pdf}
+%      
+%      q gun, PU200 (sub)
+%    \end{column}
+%   \end{columns}
+%  \end{frame}
+ 
+ \section{Event displays}
+ 
+ \begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+ 
+ \begin{frame}
+  \frametitle{Missing clu jet: VBF no PU}
+  
+  \begin{columns}
+   \begin{column}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{evtdisp_clu_27}
+    
+    \small Clusters
+   \end{column}
+   \begin{column}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{evtdisp_uncl_clutow_27}
+    
+    \small Clusters and towers (uncl.)
+   \end{column}
+   \begin{column}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{evtdisp_tow_27}
+    
+    \small Towers (full)
+   \end{column}
+  \end{columns}
+  
+  \vspace{20pt}
+
+  Legend:
+  
+  \begin{itemize}
+   \item black stars: gen jets above 40 GeV (pt in black)
+   \item reco jet pt in red (pt $>20$ GeV)
+   \item inputs drawn with "BOX" option and colored as clustered by anti-kt
+   \begin{itemize}
+    \item inputs not used in reco jets are shown as white boxes
+   \end{itemize}
+  \end{itemize}
+
+ \end{frame}
+
+  \begin{frame}
+  \frametitle{Missing clu jet: VBF PU 200}
+  
+  \begin{columns}
+   \begin{column}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{evtdisp_clu_1365}
+    
+    \small Clusters
+   \end{column}
+   \begin{column}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{evtdisp_uncl_clutow_1365}
+    
+    \small Clusters and towers (uncl.)
+   \end{column}
+   \begin{column}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{evtdisp_tow_1365}
+    
+    \small Towers (full)
+   \end{column}
+  \end{columns}
+  
+  \vspace{20pt}
+
+  Legend:
+  
+  \begin{itemize}
+   \item black stars: gen jets above 40 GeV (pt in black)
+   \item reco jet pt in red (pt $>20$ GeV)
+   \item inputs drawn with "BOX" option and colored as clustered by anti-kt
+   \begin{itemize}
+    \item inputs not used in reco jets are shown as white boxes
+   \end{itemize}
+  \end{itemize}
+
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{Missing tow jet: VBF PU 200}
+  
+  \begin{columns}
+   \begin{column}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{evtdisp_clu_2411}
+    
+    \small Clusters
+   \end{column}
+   \begin{column}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{evtdisp_uncl_clutow_2411}
+    
+    \small Clusters and towers (uncl.)
+   \end{column}
+   \begin{column}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{evtdisp_uncl_tow_2411}
+    
+    \small Towers (full)
+   \end{column}
+  \end{columns}
+  
+  \vspace{20pt}
+
+  Legend:
+  
+  \begin{itemize}
+   \item black stars: gen jets above 40 GeV (pt in black)
+   \item reco jet pt in red (pt $>20$ GeV)
+   \item inputs drawn with "BOX" option and colored as clustered by anti-kt
+   \begin{itemize}
+    \item inputs not used in reco jets are shown as white boxes
+   \end{itemize}
+  \end{itemize}
+
+ \end{frame}
+ 
+ 
+ \section{Quark gun vs VBF Higgs: investigation of differences}
+ 
+ \begin{frame}
+ \frametitle{Table of contents}
+ 
+ \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+
+\begin{frame}
+ \frametitle{Activity comparison between samples (PU200): $\rho$}
+ 
+ \begin{columns}
+  \begin{column}{0.4\textwidth}
+   \includegraphics[width=\textwidth]{canv_dist_rho_clu_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40.pdf}
+   
+   $\rho$ (clusters)
+  \end{column}
+  \begin{column}{0.4\textwidth}
+   \includegraphics[width=\textwidth]{canv_dist_rho_clutow_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40.pdf}
+   
+   $\rho$ (clusters and towers from uncl. energy)
+  \end{column}
+  \begin{column}{0.4\textwidth}
+   \includegraphics[width=\textwidth]{canv_dist_rho_tow_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40.pdf}
+   
+   $\rho$ (towers)
+  \end{column}
+ \end{columns}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Activity comparison between samples (PU200): $\sigma$}
+ 
+ \begin{columns}
+  \begin{column}{0.4\textwidth}
+   \includegraphics[width=\textwidth]{canv_dist_sigma_clu_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40.pdf}
+   
+   $\sigma$ (clusters)
+  \end{column}
+  \begin{column}{0.4\textwidth}
+   \includegraphics[width=\textwidth]{canv_dist_sigma_clutow_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40.pdf}
+   
+   $\sigma$ (clusters and towers from uncl. energy)
+  \end{column}
+  \begin{column}{0.4\textwidth}
+   \includegraphics[width=\textwidth]{canv_dist_sigma_tow_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40.pdf}
+   
+   $\sigma$ (towers)
+  \end{column}
+ \end{columns}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Activity comparison between samples (PU200): numbers of inputs}
+ 
+ \begin{columns}
+  \begin{column}{0.3\textwidth}
+   \includegraphics[width=\textwidth]{canv_dist_tc_n_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40.pdf}
+   
+   Number of trigger cells
+  \end{column}
+  \begin{column}{0.3\textwidth}
+   \includegraphics[width=\textwidth]{canv_dist_ts_n_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40.pdf}
+   
+   Number of trigger sums
+  \end{column}
+  \begin{column}{0.3\textwidth}
+   \includegraphics[width=\textwidth]{canv_dist_cl3d_n_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40.pdf}
+   
+   Number of 3D clusters
+  \end{column}
+  \begin{column}{0.3\textwidth}
+   \includegraphics[width=\textwidth]{canv_dist_tower_n_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40.pdf}
+   
+   Number of trigger towers
+  \end{column}
+ \end{columns}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Differences in jet area (PU200)}
+ 
+ \begin{columns}
+  \begin{column}{0.5\textwidth}
+   \includegraphics[width=\textwidth]{canv_dist_clujet_area_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40.pdf}
+   
+   Cluster jet area
+  \end{column}
+  \begin{column}{0.5\textwidth}
+   \includegraphics[width=\textwidth]{canv_dist_clutowjet_area_gencuts_absetaGT1p6ANDabsetaLT2p8ANDptGT40.pdf}
+   
+   (cluster + uncl. towers) jet area
+  \end{column}
+ \end{columns}
+ 
+ \vspace{20pt}
+ 
+ $\to$ tails for VBF are absent for q gun
+\end{frame}
+
+\begin{frame}
+ \frametitle{Jet area}
+ 
+ \begin{columns}
+  \begin{column}{0.4\textwidth}
+   \includegraphics[width=\textwidth]{VBF_PU200_clutowjet_area_vs_geneta.pdf}
+   
+   clutow jet area vs $|\eta|$
+  \end{column}
+  \begin{column}{0.4\textwidth}
+   \includegraphics[width=\textwidth]{VBF_PU200_clutowjet_genDR_vs_clutowjet_area.pdf}
+   
+   clutow jet DR(reco,gen) vs area
+  \end{column}
+  \begin{column}{0.4\textwidth}
+   \includegraphics[width=\textwidth]{VBF_PU200_clujet_genDR_vs_clujet_area.pdf}
+   
+   clu jet DR(reco,gen) vs area
+  \end{column}
+ \end{columns}
+
+ \vspace{20pt}
+ 
+ \begin{itemize}
+  \item Tails are larger close to detector edges
+  \item Tails correspond to fake matches (large DR between reco and gen jet)
+ \end{itemize}
+
+\end{frame}
+
+
+\end{document}
+ 
