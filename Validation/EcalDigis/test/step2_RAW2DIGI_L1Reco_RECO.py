@@ -5,9 +5,6 @@
 # with command line options: step2 --process RECO --repacked --conditions 75X_dataRun2_PromptHI_v3 --scenario HeavyIons -s RAW2DIGI,L1Reco,RECO --datatier AOD --customise Configuration/DataProcessing/RecoTLR.customiseRun2CommonHI --data --eventcontent AOD --no_exec --filein /store/hidata/HIRun2015/HIMinimumBias1/RAW/v1/000/262/703/00000/D0A0C193-DB94-E511-B5C4-02163E011FB1.root
 import FWCore.ParameterSet.Config as cms
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 #######################################################
 # MASTER SWICTHes
 #######################################################
@@ -15,36 +12,11 @@ import FWCore.ParameterSet.Config as cms
 dataset = 'HIPhoton40AndZ'
 runEmulator = False
 emulScenario = 2016
-=======
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-=======
-#######################################################
-# MASTER SWICTHes
-#######################################################
->>>>>>> 8c3ceb5cbb3... Add flags
-
-dataset = 'HIPhoton40AndZ'
-runEmulator = False
-emulScenario = 2016
-<<<<<<< HEAD
-# dataset = 'HIEWQExo'
-<<<<<<< HEAD
->>>>>>> e0e59d06736... Add modified files
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-=======
->>>>>>> 8c3ceb5cbb3... Add flags
 trigger = '' # 'HLT_HIFullTrack12_L1Centrality010_v2' # 'HLT_L1MinimumBiasHF1OR_v1' # 'HLT_HIL1Tech7_NoBPTX_v1'
 # trigger = 'HLT_HIL1Centralityext50100MinimumumBiasHF2AND_v1'
 # HLTPaths = ['HLT_HIL1Centralityext50100MinimumumBiasHF2AND_v1'], # (300Hz, fed into MinimumBias1)
 # HLTPaths = ['HLT_HIL1MinimumBiasHF1ANDPixel_SingleTrack_v1'], #  (3Hz, fed into MinimumBias1)
 # HLTPaths = ['HLT_HIUCC020_v3'], # UCC 3Hz
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 8c3ceb5cbb3... Add flags
 nEvents = 300
 
 doReco = False       # do we want to get a reco file?
@@ -53,13 +25,6 @@ doFullDQM  = False       # do we want to get a detailed DQM file?
 doECALvalid = (not doReco) and (not doFullDQM)
 
 #######################################################
-<<<<<<< HEAD
-=======
->>>>>>> e0e59d06736... Add modified files
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-=======
->>>>>>> 8c3ceb5cbb3... Add flags
 
 process = cms.Process('RECO')
 process.options = cms.untracked.PSet( allowUnscheduled = cms.untracked.bool(True) )
@@ -76,9 +41,6 @@ process.load('Configuration.StandardSequences.L1Reco_cff')
 process.load('Configuration.StandardSequences.ReconstructionHeavyIons_cff')
 # process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('CommonTools.ParticleFlow.EITopPAG_cff')
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 if doFullDQM:
    process.load('DQMOffline.Configuration.DQMOfflineHeavyIons_cff')
@@ -93,38 +55,6 @@ if doECALvalid:
 
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(nEvents)
-=======
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-process.load('DQMOffline.Configuration.DQMOfflineHeavyIons_cff')
-=======
->>>>>>> 8c3ceb5cbb3... Add flags
-process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
-if doFullDQM:
-   process.load('DQMOffline.Configuration.DQMOfflineHeavyIons_cff')
-if doECALvalid:
-   # DQM services
-   process.load("DQMServices.Core.DQM_cfg")
-   process.load("DQMServices.Components.DQMEnvironment_cfi")
-   process.dqmSaver.workflow = "/HIRun2015/Commissioning/RAW"
-   #process.load("CalibCalorimetry.Configuration.Ecal_FakeConditions_cff")
-   #process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
-   process.load("DQM.Integration.config.FrontierCondition_GT_Offline_cfi")
-
-process.maxEvents = cms.untracked.PSet(
-<<<<<<< HEAD
-<<<<<<< HEAD
-    input = cms.untracked.int32(30)
-<<<<<<< HEAD
->>>>>>> e0e59d06736... Add modified files
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-=======
-    input = cms.untracked.int32(1)
->>>>>>> cb409f0368f... Commit my latest changes
-=======
-    input = cms.untracked.int32(nEvents)
->>>>>>> 8c3ceb5cbb3... Add flags
 )
 
 # Input source
@@ -147,11 +77,6 @@ process.configurationMetadata = cms.untracked.PSet(
 
 # Output definition
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 8c3ceb5cbb3... Add flags
 if doReco:
    process.AODoutput = cms.OutputModule("PoolOutputModule",
        compressionAlgorithm = cms.untracked.string('LZMA'),
@@ -176,38 +101,6 @@ if doFullDQM:
        outputCommands = process.DQMEventContent.outputCommands,
        splitLevel = cms.untracked.int32(0)
    )
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-process.AODoutput = cms.OutputModule("PoolOutputModule",
-    compressionAlgorithm = cms.untracked.string('LZMA'),
-    compressionLevel = cms.untracked.int32(4),
-    dataset = cms.untracked.PSet(
-        dataTier = cms.untracked.string('AOD'),
-        filterName = cms.untracked.string('')
-    ),
-    eventAutoFlushCompressedSize = cms.untracked.int32(15728640),
-    fileName = cms.untracked.string('step2_RAW2DIGI_L1Reco_RECO.root'),
-    # outputCommands = process.AODEventContent.outputCommands
-    outputCommands = process.FEVTDEBUGEventContent.outputCommands
-)
-
-process.DQMoutput = cms.OutputModule("DQMRootOutputModule",
-    dataset = cms.untracked.PSet(
-        dataTier = cms.untracked.string('DQMIO'),
-        filterName = cms.untracked.string('')
-    ),
-    fileName = cms.untracked.string('step2_RAW2DIGI_L1Reco_RECO_EI_DQM_inDQM.root'),
-    outputCommands = process.DQMEventContent.outputCommands,
-    splitLevel = cms.untracked.int32(0)
-)
-<<<<<<< HEAD
->>>>>>> e0e59d06736... Add modified files
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-=======
->>>>>>> 8c3ceb5cbb3... Add flags
 
 # Additional output definition
 
@@ -221,29 +114,11 @@ process.L1Reco_step = cms.Path(process.L1Reco)
 process.reconstruction_step = cms.Path(process.reconstructionHeavyIons)
 # process.endjob_step = cms.EndPath(process.endOfProcess)
 process.eventinterpretaion_step = cms.Path(process.EIsequence)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 8c3ceb5cbb3... Add flags
 if doFullDQM:
    process.dqmoffline_step = cms.Path(process.DQMOfflineHeavyIons)
    process.DQMoutput_step = cms.EndPath(process.DQMoutput)
 if doReco:
    process.AODoutput_step = cms.EndPath(process.AODoutput)
-<<<<<<< HEAD
-=======
-process.dqmoffline_step = cms.Path(process.DQMOfflineHeavyIons)
-process.AODoutput_step = cms.EndPath(process.AODoutput)
-process.DQMoutput_step = cms.EndPath(process.DQMoutput)
->>>>>>> e0e59d06736... Add modified files
-=======
-process.dqmoffline_step = cms.Path(process.DQMOfflineHeavyIons)
-process.AODoutput_step = cms.EndPath(process.AODoutput)
-process.DQMoutput_step = cms.EndPath(process.DQMoutput)
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-=======
->>>>>>> 8c3ceb5cbb3... Add flags
 
 # initialize  MessageLogger
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
@@ -262,25 +137,6 @@ process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 #process.load("Geometry.EcalMapping.EcalMapping_cfi")
 #process.load("Geometry.EcalMapping.EcalMappingRecord_cfi")
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-# DQM services
-# process.load("DQMServices.Core.DQM_cfg")
-# process.load("DQMServices.Components.DQMEnvironment_cfi")
-# process.dqmSaver.workflow = "/HIRun2015/Commissioning/RAW"
-# #process.load("CalibCalorimetry.Configuration.Ecal_FakeConditions_cff")
-# #process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
-# process.load("DQM.Integration.config.FrontierCondition_GT_Offline_cfi")
-<<<<<<< HEAD
->>>>>>> e0e59d06736... Add modified files
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-=======
->>>>>>> 8c3ceb5cbb3... Add flags
 
 # Local database for emulator setup (to change ZS thresholds!)
 #----------------------------------------------------------------------
@@ -401,19 +257,7 @@ process.simEcalDigis.EESRPdigiCollection = cms.string('SReeDigis')#output Digis 
 #
 process.load("Validation.EcalDigis.ecalSelectiveReadoutValidation_cfi")
 process.ecalSelectiveReadoutValidation.outputFile = 'srvalid_hists.root'
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 process.ecalSelectiveReadoutValidation.verbose = cms.untracked.bool(True);
-=======
-process.ecalSelectiveReadoutValidation.verbose = cms.untracked.bool(False);
->>>>>>> e0e59d06736... Add modified files
-=======
-process.ecalSelectiveReadoutValidation.verbose = cms.untracked.bool(False);
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-=======
-process.ecalSelectiveReadoutValidation.verbose = cms.untracked.bool(True);
->>>>>>> cb409f0368f... Commit my latest changes
 
 #INPUTS:
 process.ecalSelectiveReadoutValidation.EbUnsuppressedDigiCollection = cms.InputTag("simEcalUnsuppressedDigis")
@@ -438,22 +282,10 @@ else:
    process.ecalSelectiveReadoutValidation.EeSrFlagCollection = cms.InputTag("simEcalDigis","eeSrFlags")#input
    process.ecalSelectiveReadoutValidation.TrigPrimCollection = cms.InputTag("simEcalDigis", "simEcalTriggerPrimitives")
    # process.ecalSelectiveReadoutValidation.TrigPrimCollection = cms.InputTag("ecalDigis", "EcalTriggerPrimitives")
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> cb409f0368f... Commit my latest changes
 
    from SimCalorimetry.EcalSimProducers.ecaldigi_cfi import *
    from SimCalorimetry.EcalSelectiveReadoutProducers.ecalDigis_cfi import *
 
-<<<<<<< HEAD
-=======
->>>>>>> e0e59d06736... Add modified files
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-=======
->>>>>>> cb409f0368f... Commit my latest changes
    if emulScenario == 2016:
       process.ecalSelectiveReadoutValidation.ebZsThrADCCount = 4.5
       process.ecalSelectiveReadoutValidation.eeZsThrADCCount = 6.5
@@ -556,11 +388,6 @@ process.TriggerSelectionSequence = cms.Sequence(
       process.TriggerFilter
       )
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 8c3ceb5cbb3... Add flags
 if doECALvalid:
    process.p1 = cms.Path(
          process.ecalEBunpacker
@@ -574,22 +401,6 @@ else:
          # *process.simEcalTriggerPrimitiveDigis
          *process.simEcalDigis*process.ecalSelectiveReadoutValidation
          )
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-process.p1 = cms.Path(
-      process.ecalEBunpacker
-      # *process.simEcalTriggerPrimitiveDigis
-      *process.simEcalDigis*process.ecalSelectiveReadoutValidation
-      # *process.dqmSaver
-      )
-<<<<<<< HEAD
->>>>>>> e0e59d06736... Add modified files
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-=======
->>>>>>> 8c3ceb5cbb3... Add flags
 
 # if trigger != '':
 #    process.p1 = cms.Path(
@@ -606,53 +417,16 @@ process.p1 = cms.Path(
 # to work you need (1) to uncomment the bypass flags below,
 # (2) you need to uncomment the 4 lines above (see "turn on the emulator" above)
 if runEmulator:
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
    process.simEcalDigis.trigPrimBypass = cms.bool(True) # uncomment to bypass
    process.simEcalDigis.trigPrimBypassMode = cms.int32(1) #bypass mode (uncomment)
-=======
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-   from SimCalorimetry.EcalSimProducers.ecaldigi_cfi import *
-   from SimCalorimetry.EcalSelectiveReadoutProducers.ecalDigis_cfi import *
-   # process.simEcalDigis.trigPrimBypass = cms.bool(True) # uncomment to bypass
-   # process.simEcalDigis.trigPrimBypassMode = cms.int32(1) #bypass mode (uncomment)
-<<<<<<< HEAD
->>>>>>> e0e59d06736... Add modified files
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-=======
-   process.simEcalDigis.trigPrimBypass = cms.bool(True) # uncomment to bypass
-   process.simEcalDigis.trigPrimBypassMode = cms.int32(1) #bypass mode (uncomment)
->>>>>>> cb409f0368f... Commit my latest changes
    # # process.simEcalDigis.trigPrimBypassLTH = cms.double(5.)# 2xGeV
    # # process.simEcalDigis.trigPrimBypassHTH = cms.double(11.)# 2xGeV
    #switch to apply selective readout decision on the digis and produce
    process.simEcalDigis.produceDigis = cms.untracked.bool(True)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> cb409f0368f... Commit my latest changes
    # process.simEcalTriggerPrimitiveDigis.Label = cms.string('simEcalUnsuppressedDigis')
    # process.simEcalTriggerPrimitiveDigis.Label = cms.string('simEcalEBunpacker')
    # process.simEcalTriggerPrimitiveDigis.InstanceEB = cms.string('simEcalDigis')
    # process.simEcalTriggerPrimitiveDigis.InstanceEE = cms.string('simEcalDigis')
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-   # process.simEcalTriggerPrimitiveDigis.Label = cms.string('ecalUnsuppressedDigis')
-   # process.simEcalTriggerPrimitiveDigis.Label = cms.string('ecalEBunpacker')
-   # process.simEcalTriggerPrimitiveDigis.InstanceEB = cms.string('ecalDigis')
-   # process.simEcalTriggerPrimitiveDigis.InstanceEE = cms.string('ecalDigis')
-<<<<<<< HEAD
->>>>>>> e0e59d06736... Add modified files
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-=======
->>>>>>> cb409f0368f... Commit my latest changes
 
 # # customise for PbPb (not needed thanks to the --repacked option in the cmsDriver command
 # process.ecalEBunpacker.InputLabel = cms.InputTag('rawDataRepacker')
@@ -660,9 +434,6 @@ if runEmulator:
 ###############################################
 # Schedule definition
 # process.schedule = cms.Schedule(process.p1,process.raw2digi_step,process.L1Reco_step,process.reconstruction_step,process.endjob_step,process.AODoutput_step)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 process.schedule = cms.Schedule(process.p1
       # ,process.raw2digi_step,process.L1Reco_step,process.reconstruction_step,
       # process.eventinterpretaion_step,
@@ -671,57 +442,15 @@ process.schedule = cms.Schedule(process.p1
       # process.dqmoffline_step,process.DQMoutput_step)
 
 if (doReco or doFullDQM):
-<<<<<<< HEAD
-<<<<<<< HEAD
    process.schedule.append(process.raw2digi_step)
    process.schedule.append(process.L1Reco_step)
    process.schedule.append(process.reconstruction_step)
 if doFullDQM:
    process.schedule.append(process.dqmoffline_step)
    process.schedule.append(process.DQMoutput_step)
-=======
-   process.schedule.append(process.raw2digi_step,process.L1Reco_step,process.reconstruction_step)
-if doFullDQM:
-   process.schedule.append(process.dqmoffline_step,process.DQMoutput_step)
->>>>>>> 8c3ceb5cbb3... Add flags
-=======
-   process.schedule.append(process.raw2digi_step)
-   process.schedule.append(process.L1Reco_step)
-   process.schedule.append(process.reconstruction_step)
-if doFullDQM:
-   process.schedule.append(process.dqmoffline_step)
-   process.schedule.append(process.DQMoutput_step)
->>>>>>> 09d1e964060... Fix cms.schedule extension
 if doReco:
    process.schedule.append(process.AODoutput_step)
 
-=======
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-process.schedule = cms.Schedule(process.p1,process.raw2digi_step,process.L1Reco_step,process.reconstruction_step,
-=======
-process.schedule = cms.Schedule(process.p1
-      # ,process.raw2digi_step,process.L1Reco_step,process.reconstruction_step,
->>>>>>> 8c3ceb5cbb3... Add flags
-      # process.eventinterpretaion_step,
-      # process.dqmoffline_step,process.AODoutput_step,process.DQMoutput_step
-      )
-      # process.dqmoffline_step,process.DQMoutput_step)
-
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> e0e59d06736... Add modified files
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-=======
-if (doReco or doFullDQM):
-   process.schedule.append(process.raw2digi_step,process.L1Reco_step,process.reconstruction_step)
-if doFullDQM:
-   process.schedule.append(process.dqmoffline_step,process.DQMoutput_step)
-if doReco:
-   process.schedule.append(process.AODoutput_step)
-
->>>>>>> 8c3ceb5cbb3... Add flags
 # customisation of the process.
 
 # Automatic addition of the customisation function from Configuration.DataProcessing.RecoTLR
@@ -824,9 +553,6 @@ def massReplaceInputTagUntracked(process,old="rawDataCollector",new="rawDataRepa
 ## END my mass replace
 #########################################################################
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 if runEmulator:
    if doFullDQM:
       massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,"ecalDigis","simEcalDigis")
@@ -848,64 +574,6 @@ if runEmulator:
    process.ecalDetIdToBeRecovered.ebSrFlagCollection = cms.InputTag("ecalDigis")
    process.ecalDetIdToBeRecovered.eeSrFlagCollection = cms.InputTag("ecalDigis")
 
-=======
-massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,"ecalDigis","simEcalDigis")
-massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,"ecalDigis","simEcalDigis")
-massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.InputTag("ecalDigis"),cms.InputTag("simEcalDigis"))
-massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.InputTag("ecalDigis"),cms.InputTag("simEcalDigis"))
-massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.untracked.InputTag("ecalDigis"),cms.untracked.InputTag("simEcalDigis"))
-massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.untracked.InputTag("ecalDigis"),cms.untracked.InputTag("simEcalDigis"))
-for s in ["EcalIntegrityBlockSizeErrors", "EcalIntegrityChIdErrors", "EcalIntegrityGainErrors",
-"EcalIntegrityGainSwitchErrors", "EcalIntegrityMemBlockSizeErrors", "EcalIntegrityMemChIdErrors",
-"EcalIntegrityMemGainErrors", "EcalIntegrityMemTtIdErrors", "EcalIntegrityTTIdErrors",
-"EcalIntegrityTTIdErrors", "EcalTriggerPrimitives", "EcalTriggerPrimitives",
-"ebDigis", "eeDigis"]:
-   massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.InputTag("ecalDigis",s),cms.InputTag("simEcalDigis",s))
-   massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.InputTag("ecalDigis",s),cms.InputTag("simEcalDigis",s))
-   massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.untracked.InputTag("ecalDigis",s),cms.untracked.InputTag("simEcalDigis",s))
-   massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.untracked.InputTag("ecalDigis",s),cms.untracked.InputTag("simEcalDigis",s))
-=======
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
-if runEmulator:
-   if doFullDQM:
-      massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,"ecalDigis","simEcalDigis")
-      massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.InputTag("ecalDigis"),cms.InputTag("simEcalDigis"))
-      massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.untracked.InputTag("ecalDigis"),cms.untracked.InputTag("simEcalDigis"))
-   if doFullDQM or doReco:
-      massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,"ecalDigis","simEcalDigis")
-      massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.InputTag("ecalDigis"),cms.InputTag("simEcalDigis"))
-      massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.untracked.InputTag("ecalDigis"),cms.untracked.InputTag("simEcalDigis"))
-   for s in ["ebDigis", "eeDigis"]:
-      if doFullDQM:
-         massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.InputTag("ecalDigis",s),cms.InputTag("simEcalDigis",s))
-         massSearchReplaceAnyInputTagUntracked(process.dqmoffline_step,cms.untracked.InputTag("ecalDigis",s),cms.untracked.InputTag("simEcalDigis",s))
-      if doFullDQM or doReco:
-         massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.untracked.InputTag("ecalDigis",s),cms.untracked.InputTag("simEcalDigis",s))
-         massSearchReplaceAnyInputTagUntracked(process.reconstruction_step,cms.InputTag("ecalDigis",s),cms.InputTag("simEcalDigis",s))
-
-<<<<<<< HEAD
-   # exceptions
-   process.ecalDetIdToBeRecovered.ebSrFlagCollection = cms.InputTag("ecalDigis")
-   process.ecalDetIdToBeRecovered.eeSrFlagCollection = cms.InputTag("ecalDigis")
->>>>>>> a5dc33a7c09... Back to ecalDigis in a few places
-
-# Automatic addition of the customisation function from Configuration.DataProcessing.Utils
-from Configuration.DataProcessing.Utils import addMonitoring 
-
-#call to customisation function addMonitoring imported from Configuration.DataProcessing.Utils
-process = addMonitoring(process)
-
-
-# feed the re-emulated ECAL digis into the downstream reco chain
-if runEmulator:
->>>>>>> e0e59d06736... Add modified files
-=======
-   # revert in a few places
-   process.ecalDetIdToBeRecovered.ebSrFlagCollection = cms.InputTag("ecalDigis")
-   process.ecalDetIdToBeRecovered.eeSrFlagCollection = cms.InputTag("ecalDigis")
-
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
    # process.ecalCompactTrigPrim.inColl = cms.InputTag("simEcalTriggerPrimitiveDigis","simEcalTriggerPrimitives")
    process.ecalCompactTrigPrim.inColl = cms.InputTag("ecalDigis","EcalTriggerPrimitives")
    process.ecalMultiFitUncalibRecHit.EBdigiCollection = cms.InputTag("simEcalDigis","SRebDigis")
@@ -915,21 +583,12 @@ if runEmulator:
    process.ecalRecHit.triggerPrimitiveDigiCollection = cms.InputTag("ecalDigis","EcalTriggerPrimitives")
    process.ecalTPSkim.tpInputCollection = cms.InputTag("ecalDigis","EcalTriggerPrimitives")
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
 # Automatic addition of the customisation function from Configuration.DataProcessing.Utils
 from Configuration.DataProcessing.Utils import addMonitoring 
 
 #call to customisation function addMonitoring imported from Configuration.DataProcessing.Utils
 process = addMonitoring(process)
 
-<<<<<<< HEAD
-=======
->>>>>>> e0e59d06736... Add modified files
-=======
->>>>>>> 5ba0498c373... Some exceptions about ecalDigis
 if trigger != '':
    # filter all path with the production filter sequence
    process.superFilterPath = cms.Path(process.TriggerFilter)
@@ -941,3 +600,4 @@ if trigger != '':
    # process.DQMoutput.SelectEvents = cms.untracked.PSet(
    #       SelectEvents = cms.vstring('TriggerFilter')
    #       )
+
