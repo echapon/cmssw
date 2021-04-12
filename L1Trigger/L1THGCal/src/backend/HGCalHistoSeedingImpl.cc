@@ -163,13 +163,19 @@ HGCalHistoSeedingImpl::Histogram HGCalHistoSeedingImpl::fillSmoothPhiHistoCluste
                                                                                    const vector<unsigned>& binSums) {
   Histogram histoSumPhiClusters(nBins1_, nBins2_);
 
+  const int bin1_10pct = (int) 0.1*nBins1_;
+  const float R1_10pct = kROverZMin_ + bin1_10pct * (kROverZMax_ - kROverZMin_) / nBins1_;
+  const float R2_10pct = R1_10pct + ((kROverZMax_ - kROverZMin_) / nBins1_);
+  const float area_10pct = ((M_PI * (pow(R2_10pct, 2) - pow(R1_10pct, 2))) / nBins2_);
+
   for (int z_side : {-1, 1}) {
     for (unsigned bin1 = 0; bin1 < nBins1_; bin1++) {
       int nBinsSide = (binSums[bin1] - 1) / 2;
-      float R1 = kROverZMin_ + bin1 * (kROverZMax_ - kROverZMin_) / nBins1_;
-      float R2 = R1 + ((kROverZMax_ - kROverZMin_) / nBins1_);
+      // float R1 = kROverZMin_ + bin1 * (kROverZMax_ - kROverZMin_) / nBins1_;
+      // float R2 = R1 + ((kROverZMax_ - kROverZMin_) / nBins1_);
       double area =
-          ((M_PI * (pow(R2, 2) - pow(R1, 2))) / nBins2_) *
+          // ((M_PI * (pow(R2, 2) - pow(R1, 2))) / nBins2_) *
+          area_10pct *
           (1 +
            2.0 *
                (1 -
