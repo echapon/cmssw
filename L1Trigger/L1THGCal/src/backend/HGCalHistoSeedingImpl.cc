@@ -3,6 +3,7 @@
 #include "DataFormats/Math/interface/deltaR.h"
 #include "DataFormats/Math/interface/deltaPhi.h"
 #include <numeric>
+#include <iostream>
 
 HGCalHistoSeedingImpl::HGCalHistoSeedingImpl(const edm::ParameterSet& conf)
     : seedingAlgoType_(conf.getParameter<std::string>("type_histoalgo")),
@@ -163,15 +164,21 @@ HGCalHistoSeedingImpl::Histogram HGCalHistoSeedingImpl::fillSmoothPhiHistoCluste
                                                                                    const vector<unsigned>& binSums) {
   Histogram histoSumPhiClusters(nBins1_, nBins2_);
 
+  const int bin1_10pct = (int) 0.1*nBins1_;
+  const float R1_10pct = kROverZMin_ + bin1_10pct * (kROverZMax_ - kROverZMin_) / nBins1_;
+  const float R2_10pct = R1_10pct + ((kROverZMax_ - kROverZMin_) / nBins1_);
+  const float area_10pct = ((M_PI * (pow(R2_10pct, 2) - pow(R1_10pct, 2))) / nBins2_);
+
   for (int z_side : {-1, 1}) {
     for (unsigned bin1 = 0; bin1 < nBins1_; bin1++) {
       int nBinsSide = (binSums[bin1] - 1) / 2;
-      float R1 = kROverZMin_ + bin1 * (kROverZMax_ - kROverZMin_);
-      float R2 = R1 + (kROverZMax_ - kROverZMin_);
+      float R1 = kROverZMin_ + bin1 * (kROverZMax_ - kROverZMin_) / nBins1_; // comment this for noarea
+      float R2 = R1 + ((kROverZMax_ - kROverZMin_) / nBins1_); // comment this for noarea
       double area =
-          0.5 * (pow(R2, 2) - pow(R1, 2)) *
+          ((M_PI * (pow(R2, 2) - pow(R1, 2))) / nBins2_) * // comment this for noarea
+          // area_10pct *                                  // comment with for with area
           (1 +
-           0.5 *
+           2.0 *
                (1 -
                 pow(0.5,
                     nBinsSide)));  // Takes into account different area of bins in different R-rings + sum of quadratic weights used
@@ -196,7 +203,7 @@ HGCalHistoSeedingImpl::Histogram HGCalHistoSeedingImpl::fillSmoothPhiHistoCluste
         }
 
         auto& bin = histoSumPhiClusters.at(z_side, bin1, bin2);
-        bin.values[Bin::Content::Sum] = content / area;
+        bin.values[Bin::Content::Sum] = (content / area) * area_per_triggercell_;
         bin.weighted_x = bin_orig.weighted_x;
         bin.weighted_y = bin_orig.weighted_y;
       }
@@ -261,6 +268,7 @@ void HGCalHistoSeedingImpl::setSeedEnergyAndPosition(std::vector<std::pair<Globa
     y_seed = histBin.weighted_y;
   }
 
+  // std::cout << GlobalPoint(x_seed, y_seed, z_side).eta() << " " << GlobalPoint(x_seed, y_seed, z_side).phi() << std::endl;
   seedPositionsEnergy.emplace_back(GlobalPoint(x_seed, y_seed, z_side), histBin.values[Bin::Content::Sum]);
 }
 
@@ -272,6 +280,7 @@ std::vector<std::pair<GlobalPoint, double>> HGCalHistoSeedingImpl::computeMaxSee
       for (unsigned bin2 = 0; bin2 < nBins2_; bin2++) {
         float MIPT_seed = histoClusters.at(z_side, bin1, bin2).values[Bin::Content::Sum];
         bool isMax = MIPT_seed > histoThreshold_;
+        // if (MIPT_seed>7) std::cout << MIPT_seed << " " << histoThreshold_ << std::endl;
         if (!isMax)
           continue;
 
@@ -312,6 +321,9 @@ std::vector<std::pair<GlobalPoint, double>> HGCalHistoSeedingImpl::computeMaxSee
 
         isMax &= MIPT_seed >= MIPT_S && MIPT_seed > MIPT_N && MIPT_seed >= MIPT_E && MIPT_seed >= MIPT_SE &&
                  MIPT_seed >= MIPT_NE && MIPT_seed > MIPT_W && MIPT_seed > MIPT_SW && MIPT_seed > MIPT_NW;
+
+        // std::cout << bin1 << ", " << bin2 << ": " << MIPT_seed << " -> "
+           // << MIPT_S << " " << MIPT_N << " " << MIPT_E << " " << MIPT_SE << " " << MIPT_NE << " " << MIPT_W << " " << MIPT_SW << " " << MIPT_NW << std::endl;
 
         if (isMax) {
           setSeedEnergyAndPosition(seedPositionsEnergy, z_side, bin1, bin2, histoClusters.at(z_side, bin1, bin2));
@@ -519,14 +531,38 @@ void HGCalHistoSeedingImpl::findHistoSeeds(const std::vector<edm::Ptr<l1t::HGCal
                                            std::vector<std::pair<GlobalPoint, double>>& seedPositionsEnergy) {
   /* put clusters into an r/z x phi histogram */
   Histogram histoCluster = fillHistoClusters(clustersPtrs);
+  // std::array<float, 3> maxbin0 = findMax(histoCluster);
+  // std::array<float, 3> maxbinpt0 = findMaxPt(histoCluster);
+
+  // std::array<double, 4> bounds = boundaries();
+  // double minx1 = std::get<0>(bounds);
+  // double maxx1 = std::get<1>(bounds);
+  // double minx2 = std::get<2>(bounds);
+  // double maxx2 = std::get<3>(bounds);
+  // SaveHistoAs(histoCluster,"histo_init.root",minx1,maxx1,minx2,maxx2);
 
   Histogram smoothHistoCluster;
   if (seedingSpace_ == RPhi) {
     /* smoothen along the phi direction + normalize each bin to same area */
     Histogram smoothPhiHistoCluster = fillSmoothPhiHistoClusters(histoCluster, binsSumsHisto_);
+    // SaveHistoAs(smoothPhiHistoCluster,"histo_smoothphi.root",minx1,maxx1,minx2,maxx2);
+    // std::array<float, 3> maxbin1 = findMax(smoothPhiHistoCluster);
+    // std::array<float, 3> maxbinpt1 = findMaxPt(smoothPhiHistoCluster);
 
     /* smoothen along the r/z direction */
     smoothHistoCluster = fillSmoothRPhiHistoClusters(smoothPhiHistoCluster);
+    // SaveHistoAs(smoothHistoCluster,"histo_smoothRphi.root",minx1,maxx1,minx2,maxx2);
+    // std::array<float, 3> maxbin2 = findMax(smoothHistoCluster);
+    // std::array<float, 3> maxbinpt2 = findMaxPt(smoothHistoCluster);
+
+    // std::cout << "MAXE: ";
+    // std::cout << std::get<0>(maxbin0) << ", " << std::get<1>(maxbin0) << ", " << std::get<2>(maxbin0);
+    // std::cout << ", " << std::get<0>(maxbin1) << ", " << std::get<1>(maxbin1) << ", " << std::get<2>(maxbin1);
+    // std::cout << ", " << std::get<0>(maxbin2) << ", " << std::get<1>(maxbin2) << ", " << std::get<2>(maxbin2) << std::endl;
+    // std::cout << "MAXPT: ";
+    // std::cout << std::get<0>(maxbinpt0) << ", " << std::get<1>(maxbinpt0) << ", " << std::get<2>(maxbinpt0);
+    // std::cout << ", " << std::get<0>(maxbinpt1) << ", " << std::get<1>(maxbinpt1) << ", " << std::get<2>(maxbinpt1);
+    // std::cout << ", " << std::get<0>(maxbinpt2) << ", " << std::get<1>(maxbinpt2) << ", " << std::get<2>(maxbinpt2) << std::endl;
   } else if (seedingSpace_ == XY) {
     smoothHistoCluster = fillSmoothHistoClusters(histoCluster, smoothing_ecal_, Bin::Content::Ecal);
     smoothHistoCluster = fillSmoothHistoClusters(smoothHistoCluster, smoothing_hcal_, Bin::Content::Hcal);
@@ -540,6 +576,7 @@ void HGCalHistoSeedingImpl::findHistoSeeds(const std::vector<edm::Ptr<l1t::HGCal
       }
     }
   }
+
 
   /* seeds determined with local maximum criteria */
   if (seedingType_ == HistoMaxC3d)
@@ -560,4 +597,57 @@ std::array<double, 4> HGCalHistoSeedingImpl::boundaries() {
       return {{-kXYMax_, kXYMax_, -kXYMax_, kXYMax_}};
   }
   return {{0., 0., 0., 0.}};
+}
+
+std::array<float, 3> HGCalHistoSeedingImpl::findMax(Histogram hist) {
+   unsigned x1max=0, x2max=0;
+   float emax=-1;
+
+    for (int z_side : {-1, 1}) {
+      for (unsigned x1 = 0; x1 < nBins1_; x1++) {
+        for (unsigned x2 = 0; x2 < nBins2_; x2++) {
+          auto bin = hist.at(z_side, x1, x2);
+          auto val = bin.values[Bin::Content::Sum];
+          if (val>emax) {
+             emax = val;
+             x1max = x1;
+             x2max = x2;
+          }
+        }
+      }
+    }
+
+    return {{(float) x1max, (float) x2max, emax}};
+}
+
+std::array<float, 3> HGCalHistoSeedingImpl::findMaxPt(Histogram hist) {
+   std::array<double, 4> bounds = boundaries();
+   double minx1 = std::get<0>(bounds);
+   double maxx1 = std::get<1>(bounds);
+   double minx2 = std::get<2>(bounds);
+   double maxx2 = std::get<3>(bounds);
+
+   unsigned x1max=0, x2max=0;
+   float ptmax=-1;
+
+   for (int z_side : {-1, 1}) {
+      for (unsigned x1 = 0; x1 < nBins1_; x1++) {
+         for (unsigned x2 = 0; x2 < nBins2_; x2++) {
+            auto bin = hist.at(z_side, x1, x2);
+            float r = minx1 + (x1 + 0.5) * (maxx1 - minx1) / nBins1_;
+            float phi = minx2 + (x2 + 0.5) * (maxx2 - minx2) / nBins2_;
+            float x = r * cos(phi);
+            float y = r * sin(phi);
+            auto eta = GlobalPoint(x, y, z_side).eta();
+            auto val = bin.values[Bin::Content::Sum] / cosh(eta);
+            if (val>ptmax) {
+               ptmax = val;
+               x1max = x1;
+               x2max = x2;
+            }
+         }
+      }
+   }
+
+   return {{(float) x1max, (float) x2max, ptmax}};
 }

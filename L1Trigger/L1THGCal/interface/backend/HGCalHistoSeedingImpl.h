@@ -11,6 +11,9 @@
 #include "L1Trigger/L1THGCal/interface/backend/HGCalShowerShape.h"
 #include "L1Trigger/L1THGCal/interface/backend/HGCalTriggerClusterIdentificationBase.h"
 
+#include "TH2.h"
+#include "TFile.h"
+
 class HGCalHistoSeedingImpl {
 private:
   struct Bin {
@@ -40,6 +43,9 @@ private:
     iterator end() { return histogram_.end(); }
     const_iterator end() const { return histogram_.end(); }
 
+    unsigned nbins1() {return bins1_;}
+    unsigned nbins2() {return bins2_;}
+
   private:
     static constexpr unsigned kSides_ = 2;
     unsigned bins1_ = 0;
@@ -56,6 +62,37 @@ private:
     }
   };
   using Histogram = HistogramT<Bin>;
+
+  void SaveHistoAs(Histogram hist, const char* filename, float xmin=0, float xmax=-1, float ymin=0, float ymax=-1) {
+     TFile f(filename, "RECREATE");
+     f.cd();
+     unsigned nbins1 = hist.nbins1();
+     unsigned nbins2 = hist.nbins2();
+     if (xmax<xmin) {xmin=0; xmax=nbins1;}
+     if (ymax<ymin) {ymin=0; ymax=nbins2;}
+     TH2F hplusS("hplusS", "+z side (Sum);r;#phi", nbins1, xmin, xmax, nbins2, ymin, ymax);
+     TH2F hminusS("hminusS", "-z side (Sum);r;#phi", nbins1, xmin, xmax, nbins2, ymin, ymax);
+     TH2F hplusE("hplusE", "+z side (Ecal);r;#phi", nbins1, xmin, xmax, nbins2, ymin, ymax);
+     TH2F hminusE("hminusE", "-z side (Ecal);r;#phi", nbins1, xmin, xmax, nbins2, ymin, ymax);
+     TH2F hplusH("hplusH", "+z side (Hcal);r;#phi", nbins1, xmin, xmax, nbins2, ymin, ymax);
+     TH2F hminusH("hminusH", "-z side (Hcal);r;#phi", nbins1, xmin, xmax, nbins2, ymin, ymax);
+     for (unsigned i=0; i<nbins1; i++)
+        for (unsigned j=0; j<nbins2; j++) {
+           hplusS.SetBinContent(i+1, j+1, hist.at(1, i, j).values[Bin::Content::Sum]);
+           hminusS.SetBinContent(i+1, j+1, hist.at(-1, i, j).values[Bin::Content::Sum]);
+           hplusE.SetBinContent(i+1, j+1, hist.at(1, i, j).values[Bin::Content::Ecal]);
+           hminusE.SetBinContent(i+1, j+1, hist.at(-1, i, j).values[Bin::Content::Ecal]);
+           hplusH.SetBinContent(i+1, j+1, hist.at(1, i, j).values[Bin::Content::Hcal]);
+           hminusH.SetBinContent(i+1, j+1, hist.at(-1, i, j).values[Bin::Content::Hcal]);
+        }
+     hplusS.Write("hplusS");
+     hminusS.Write("hminusS");
+     hplusE.Write("hplusE");
+     hminusE.Write("hminusE");
+     hplusH.Write("hplusH");
+     hminusH.Write("hminusH");
+     f.Close();
+  }
 
   class Navigator {
   public:
@@ -142,6 +179,9 @@ private:
 
   std::array<double, 4> boundaries();
 
+  std::array<float, 3> findMax(Histogram hist);
+  std::array<float, 3> findMaxPt(Histogram hist);
+
   std::string seedingAlgoType_;
   SeedingType seedingType_;
   SeedingSpace seedingSpace_;
@@ -151,6 +191,8 @@ private:
   unsigned nBins2_ = 216;
   std::vector<unsigned> binsSumsHisto_;
   double histoThreshold_ = 20.;
+  static constexpr double area_per_triggercell_ =
+      4.91E-05;  // Hex_Wafer_Area (x/z units)/N_TC (per wafer) = (0.866*((hexWafer_minimal_diameter)*(1./319.))^2 / 48)
   std::vector<double> neighbour_weights_;
   std::vector<double> smoothing_ecal_;
   std::vector<double> smoothing_hcal_;
@@ -166,3 +208,4 @@ private:
 };
 
 #endif
+

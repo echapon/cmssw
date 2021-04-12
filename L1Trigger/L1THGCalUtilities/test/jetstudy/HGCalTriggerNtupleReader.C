@@ -426,25 +426,32 @@ void HGCalTriggerNtupleReader::Loop(TString filename_out, bool doPUsub, int evtd
       // cluster jets
       for (auto itjet : jets_clu) {
          // match the jet to a gen jet
+         float genpt, geneta, genphi;
          float minDR = 999.;
          int jminDR = -1;
-         for (int j=0; j<genjet_n; j++) {
-            bool okpt = genjet_pt->at(j) > kJetPtMin;
-            bool oketa = (fabs(genjet_eta->at(j))>kJetAbsEtaMin) && (fabs(genjet_eta->at(j))<kJetAbsEtaMax);
-            if (!okpt || !oketa) continue;
-            float deta = itjet.eta() - genjet_eta->at(j);
-            float dphi = TVector2::Phi_mpi_pi(itjet.phi() - genjet_phi->at(j));
-            float dR = sqrt(pow(deta,2) + pow(dphi, 2));
-            if (dR < minDR) {
-               minDR = dR;
-               jminDR = j;
+         if (genjet_n>0) { // only do gen matching in case there are gen jets
+            for (int j=0; j<genjet_n; j++) {
+               bool okpt = genjet_pt->at(j) > kJetPtMin;
+               bool oketa = (fabs(genjet_eta->at(j))>kJetAbsEtaMin) && (fabs(genjet_eta->at(j))<kJetAbsEtaMax);
+               if (!okpt || !oketa) continue;
+               float deta = itjet.eta() - genjet_eta->at(j);
+               float dphi = TVector2::Phi_mpi_pi(itjet.phi() - genjet_phi->at(j));
+               float dR = sqrt(pow(deta,2) + pow(dphi, 2));
+               if (dR < minDR) {
+                  minDR = dR;
+                  jminDR = j;
+               }
             }
-         }
-         if (minDR > kRmatch) continue; // no match: fake jet
+            if (minDR > kRmatch) continue; // no match: fake jet
 
-         float genpt = genjet_pt->at(jminDR);
-         float geneta = genjet_eta->at(jminDR);
-         float genphi = genjet_phi->at(jminDR);
+            genpt = genjet_pt->at(jminDR);
+            geneta = genjet_eta->at(jminDR);
+            genphi = genjet_phi->at(jminDR);
+         } else {
+            genpt = -1;
+            geneta = -999.;
+            genphi = -999.;
+         }
 
          clujet_pt.emplace_back(itjet.pt());
          clujet_eta.emplace_back(itjet.eta());
@@ -496,26 +503,32 @@ void HGCalTriggerNtupleReader::Loop(TString filename_out, bool doPUsub, int evtd
       // tower jets
       for (auto itjet : jets_tow) {
          // match the jet to a gen jet
+         float genpt, geneta, genphi;
          float minDR = 999.;
          int jminDR = -1;
-         for (int j=0; j<genjet_n; j++) {
-            bool okpt = genjet_pt->at(j) > kJetPtMin;
-            bool oketa = (fabs(genjet_eta->at(j))>kJetAbsEtaMin) && (fabs(genjet_eta->at(j))<kJetAbsEtaMax);
-            if (!okpt || !oketa) continue;
-            float deta = itjet.eta() - genjet_eta->at(j);
-            float dphi = TVector2::Phi_mpi_pi(itjet.phi() - genjet_phi->at(j));
-            float dR = sqrt(pow(deta,2) + pow(dphi, 2));
-            if (dR < minDR) {
-               minDR = dR;
-               jminDR = j;
+         if (genjet_n>0) { // only do gen matching in case there are gen jets
+            for (int j=0; j<genjet_n; j++) {
+               bool okpt = genjet_pt->at(j) > kJetPtMin;
+               bool oketa = (fabs(genjet_eta->at(j))>kJetAbsEtaMin) && (fabs(genjet_eta->at(j))<kJetAbsEtaMax);
+               if (!okpt || !oketa) continue;
+               float deta = itjet.eta() - genjet_eta->at(j);
+               float dphi = TVector2::Phi_mpi_pi(itjet.phi() - genjet_phi->at(j));
+               float dR = sqrt(pow(deta,2) + pow(dphi, 2));
+               if (dR < minDR) {
+                  minDR = dR;
+                  jminDR = j;
+               }
             }
+            if (minDR > kRmatch) continue; // no match: fake jet
+
+            genpt = genjet_pt->at(jminDR);
+            geneta = genjet_eta->at(jminDR);
+            genphi = genjet_phi->at(jminDR);
+         } else {
+            genpt = -1;
+            geneta = -999.;
+            genphi = -999.;
          }
-         if (minDR > kRmatch) continue; // no match: fake jet
-
-
-         float genpt = genjet_pt->at(jminDR);
-         float geneta = genjet_eta->at(jminDR);
-         float genphi = genjet_phi->at(jminDR);
 
          towjet_pt.emplace_back(itjet.pt());
          towjet_eta.emplace_back(itjet.eta());
@@ -568,25 +581,32 @@ void HGCalTriggerNtupleReader::Loop(TString filename_out, bool doPUsub, int evtd
       for (auto itjet : jets_clutow) {
          // if (itjet.pt()>50) cout << jentry <<  " clutow jet: " << itjet.pt() << " " << itjet.eta() << " " << itjet.phi() << endl; // DEBUG
          // match the jet to a gen jet
+         float genpt, geneta, genphi;
          float minDR = 999.;
          int jminDR = -1;
-         for (int j=0; j<genjet_n; j++) {
-            bool okpt = genjet_pt->at(j) > kJetPtMin;
-            bool oketa = (fabs(genjet_eta->at(j))>kJetAbsEtaMin) && (fabs(genjet_eta->at(j))<kJetAbsEtaMax);
-            if (!okpt || !oketa) continue;
-            float deta = itjet.eta() - genjet_eta->at(j);
-            float dphi = TVector2::Phi_mpi_pi(itjet.phi() - genjet_phi->at(j));
-            float dR = sqrt(pow(deta,2) + pow(dphi, 2));
-            if (dR < minDR) {
-               minDR = dR;
-               jminDR = j;
+         if (genjet_n>0) { // only do gen matching in case there are gen jets
+            for (int j=0; j<genjet_n; j++) {
+               bool okpt = genjet_pt->at(j) > kJetPtMin;
+               bool oketa = (fabs(genjet_eta->at(j))>kJetAbsEtaMin) && (fabs(genjet_eta->at(j))<kJetAbsEtaMax);
+               if (!okpt || !oketa) continue;
+               float deta = itjet.eta() - genjet_eta->at(j);
+               float dphi = TVector2::Phi_mpi_pi(itjet.phi() - genjet_phi->at(j));
+               float dR = sqrt(pow(deta,2) + pow(dphi, 2));
+               if (dR < minDR) {
+                  minDR = dR;
+                  jminDR = j;
+               }
             }
-         }
-         if (minDR > kRmatch) continue; // no match: fake jet
+            if (minDR > kRmatch) continue; // no match: fake jet
 
-         float genpt = genjet_pt->at(jminDR);
-         float geneta = genjet_eta->at(jminDR);
-         float genphi = genjet_phi->at(jminDR);
+            genpt = genjet_pt->at(jminDR);
+            geneta = genjet_eta->at(jminDR);
+            genphi = genjet_phi->at(jminDR);
+         } else {
+            genpt = -1;
+            geneta = -999.;
+            genphi = -999.;
+         }
 
          clutowjet_pt.emplace_back(itjet.pt());
          clutowjet_eta.emplace_back(itjet.eta());

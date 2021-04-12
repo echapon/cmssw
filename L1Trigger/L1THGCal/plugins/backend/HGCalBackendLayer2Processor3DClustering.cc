@@ -11,6 +11,7 @@
 #include "L1Trigger/L1THGCal/interface/backend/HGCalTriggerClusterInterpreterBase.h"
 
 #include <utility>
+#include <iostream>
 
 class HGCalBackendLayer2Processor3DClustering : public HGCalBackendLayer2ProcessorBase {
 public:
@@ -74,8 +75,10 @@ public:
         break;
       case HistoC3d:
         multiclusteringHistoSeeding_->findHistoSeeds(clustersPtrs, seedPositionsEnergy);
+        // std::cout << seedPositionsEnergy.size() << std::endl;
         multiclusteringHistoClustering_->clusterizeHisto(
             clustersPtrs, seedPositionsEnergy, *triggerGeometry_, collCluster3D, rejectedClusters);
+        // std::cout << collCluster3D.size() << " " << rejectedClusters.size() << std::endl;
         break;
       default:
         // Should not happen, clustering type checked in constructor

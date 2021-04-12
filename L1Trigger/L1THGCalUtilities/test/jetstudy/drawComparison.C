@@ -8,10 +8,13 @@
 #include "TProfile.h"
 #include "TLegend.h"
 #include "TLatex.h"
+#include "TSystem.h"
+#include "Math/MultiRootFinder.h"
+#include "Math/WrappedMultiTF1.h"
 
-TString basepath = "/eos/cms/store/group/phys_heavyions/echapon/HGCal/l1jetperf/trees/rphi_thr6p5/";
+TString basepath = "/eos/cms/store/group/phys_heavyions/echapon/HGCal/l1jetperf/trees/default/";
 // TString basepath = "/home/emilien/Documents/Postdoc_IHEP/HGCAL/TPG_clustering_study";
-TString outputpath = "plots/rphi_thr6p5/";
+TString outputpath = "plots/default/";
 
 TH1D* myFitSlicesY(TH2F *h2d, bool domean, int slicenb = -1, TString canvname = "");
 
@@ -267,13 +270,22 @@ void drawEfficiency(TString sample = "VBF_HToInvisible",
      cout << "drawEfficiency: " << file_uncltow << " does not exist, skipping." << endl;
      return;
   }
+  // funcl->ls();
   TTree *truncl = (TTree *)funcl->Get("tree");
+  if (!truncl) {
+     cout << "No tree in " << file_uncltow << endl;
+     return;
+  }
   TFile *ffull = TFile::Open(file_fulltow);
   if (!ffull || !ffull->IsOpen()) {
      cout << "drawEfficiency: " << file_fulltow << " does not exist, skipping." << endl;
      return;
   }
   TTree *trfull = (TTree *)ffull->Get("tree");
+  if (!trfull) {
+     cout << "No tree in " << file_fulltow << endl;
+     return;
+  }
 
   if (recocuts0 == "")
     recocuts0 = "1";
@@ -368,6 +380,30 @@ void drawEfficiency(TString sample = "VBF_HToInvisible",
   checkNumDen(h_unclclutow, h_gen);
   TGraphAsymmErrors *gunclclutow = new TGraphAsymmErrors(h_unclclutow, h_gen);
 
+  // in the case of pt dependence: fit with an Erf function in order to get the rough 90% efficiency point
+  // TF1 fturnon("fturnon","0.5*[0]*(1+TMath::Erf((x-[1])/[2]))",0,200);
+  // TF1 fsolve("fsolve","0.5*[0]*(1+TMath::Erf((x-[1])/[2]))-[3]",0,200);
+  // ROOT::Math::WrappedTF1 gturnon(fsolve);
+  // ROOT::Math::RootFinder r;
+  // r.SetFunction(gturnon,0,200);
+  // // r.SetPrintLevel(0);
+
+  // fturnon.SetParameters(1,30,50);
+  // gclu->Fit(&fturnon,"NQ");
+  // fsolve.SetParameters(fturnon.GetParameter(0),fturnon.GetParameter(1),fturnon.GetParameter(2),0.9);
+  // r.Solve();
+  // double f90_clu = r.Root();
+  // fturnon.SetParameters(1,30,50);
+  // gfulltow->Fit(&fturnon,"NQ");
+  // fsolve.SetParameters(fturnon.GetParameter(0),fturnon.GetParameter(1),fturnon.GetParameter(2),0.9);
+  // r.Solve();
+  // double f90_fulltow = r.Root();
+  // fturnon.SetParameters(1,30,50);
+  // gunclclutow->Fit(&fturnon,"NQ");
+  // fsolve.SetParameters(fturnon.GetParameter(0),fturnon.GetParameter(1),fturnon.GetParameter(2),0.9);
+  // r.Solve();
+  // double f90_unclclutow = r.Root();
+
   TString canvtitle;
   if (gencuts0 == "1")
     gencuts0 = "none";
@@ -414,6 +450,7 @@ void drawEfficiency(TString sample = "VBF_HToInvisible",
   ylatex -= dylatex;
 
   myc.PrintCanvas();
+  // if (xvariable0.Contains("pt")) myc.PrintCanvas_C();
 }
 
 void drawScaleResolution(TString sample,
@@ -437,12 +474,20 @@ void drawScaleResolution(TString sample,
      return;
   }
   TTree *truncl = (TTree *)funcl->Get("tree");
+  if (!truncl) {
+     cout << "No tree in " << file_uncltow << endl;
+     return;
+  }
   TFile *ffull = TFile::Open(file_fulltow);
   if (!ffull || !ffull->IsOpen()) {
      cout << "drawScaleResolution: " << file_fulltow << " does not exist, skipping." << endl;
      return;
   }
   TTree *trfull = (TTree *)ffull->Get("tree");
+  if (!trfull) {
+     cout << "No tree in " << file_fulltow << endl;
+     return;
+  }
 
   if (recocuts0 == "")
     recocuts0 = "1";
@@ -830,11 +875,11 @@ void drawDist(TString xvariable0 = "abseta", TString gencuts0 = "abs(eta)>1.6&&a
   } else if (xvariable0.Contains("cl3d_n")) {
     nbins = 60;
     xmin = 0;
-    xmax = 300;
+    xmax = 700;
     xaxistitle = "# 3D clusters";
   } else if (xvariable0.Contains("tower_n")) {
     nbins = 80;
-    xmin = 2300;
+    xmin = 2200;
     xmax = 2700;
     xaxistitle = "# trigger towers";
   } else {
@@ -1850,6 +1895,10 @@ void drawAll(double deltaR = 0.2) {
   drawDist("clujet_area", "abs(eta)>1.6&&abs(eta)<2.8&&pt>40");
   drawDist("clutowjet_area", "abs(eta)>1.6&&abs(eta)<2.8&&pt>40");
   drawDist("towjet_area", "abs(eta)>1.6&&abs(eta)<2.8&&pt>40");
+  drawDist("tc_n", "");
+  drawDist("ts_n", "");
+  drawDist("cl3d_n", "");
+  drawDist("tower_n", "");
 }
 
 TH1D* myFitSlicesY(TH2F *h2d, bool domean, int slicenb, TString canvname) {

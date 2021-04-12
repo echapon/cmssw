@@ -43,7 +43,7 @@ TGraph *findMax(TGraph2D *tg2d) {
 
 void createScaleFile(TString filein, TString jetcol, TString gencuts = "abs(eta)>1.6&&abs(eta)<2.8&&pt>40", TString fileout="file.root", TString ptvar = "pt") {
    TFile *f = TFile::Open(filein);
-   if (!fin) {
+   if (!f) {
       cout << "createScaleFile: " << filein << " does not exist, skipping." << endl;
       return;
    }
@@ -108,18 +108,18 @@ void createScaleFile(TString filein, TString jetcol, TString gencuts = "abs(eta)
    c.SaveAs(fileout.ReplaceAll(".root",".pdf"));
 }
 
-void createScaleFiles(TString basepath = "./") {
-   createScaleFile(basepath+"unclunseltowers/noPUsub/output_VBF_HToInvisible_NoPU.root", "clujet", "", basepath+"jec_VBF_NoPU_clu.root");
-   createScaleFile(basepath+"unclunseltowers/noPUsub/output_VBF_HToInvisible_NoPU.root", "clutowjet", "", basepath+"jec_VBF_NoPU_unclclutow.root");
-   createScaleFile(basepath+"fulltowers/noPUsub/output_VBF_HToInvisible_NoPU.root", "towjet", "", basepath+"jec_VBF_NoPU_fulltow.root");
+void createScaleFiles(TString basepath = ".") {
+   createScaleFile(basepath+"/unclunseltowers/noPUsub/output_VBF_HToInvisible_NoPU.root", "clujet", "", basepath+"/jec_VBF_NoPU_clu.root");
+   createScaleFile(basepath+"/unclunseltowers/noPUsub/output_VBF_HToInvisible_NoPU.root", "clutowjet", "", basepath+"/jec_VBF_NoPU_unclclutow.root");
+   createScaleFile(basepath+"/fulltowers/noPUsub/output_VBF_HToInvisible_NoPU.root", "towjet", "", basepath+"/jec_VBF_NoPU_fulltow.root");
 
-   createScaleFile(basepath+"unclunseltowers/noPUsub/output_VBF_HToInvisible_PU200_offset.root", "clujet", "", basepath+"jec_VBF_PU200_clu_offset.root", "ptoff");
-   createScaleFile(basepath+"unclunseltowers/noPUsub/output_VBF_HToInvisible_PU200_offset.root", "clutowjet", "", basepath+"jec_VBF_PU200_unclclutow_offset.root", "ptoff");
-   createScaleFile(basepath+"fulltowers/noPUsub/output_VBF_HToInvisible_PU200_offset.root", "towjet", "", basepath+"jec_VBF_PU200_fulltow_offset.root", "ptoff");
+   createScaleFile(basepath+"/unclunseltowers/noPUsub/output_VBF_HToInvisible_PU200_offset.root", "clujet", "", basepath+"/jec_VBF_PU200_clu_offset.root", "ptoff");
+   createScaleFile(basepath+"/unclunseltowers/noPUsub/output_VBF_HToInvisible_PU200_offset.root", "clutowjet", "", basepath+"/jec_VBF_PU200_unclclutow_offset.root", "ptoff");
+   createScaleFile(basepath+"/fulltowers/noPUsub/output_VBF_HToInvisible_PU200_offset.root", "towjet", "", basepath+"/jec_VBF_PU200_fulltow_offset.root", "ptoff");
 
-   createScaleFile(basepath+"unclunseltowers/PUsub/output_VBF_HToInvisible_PU200.root", "clujet", "", basepath+"jec_VBF_PUsub_clu.root");
-   createScaleFile(basepath+"unclunseltowers/PUsub/output_VBF_HToInvisible_PU200.root", "clutowjet", "", basepath+"jec_VBF_PUsub_unclclutow.root");
-   createScaleFile(basepath+"fulltowers/PUsub/output_VBF_HToInvisible_PU200.root", "towjet", "", basepath+"jec_VBF_PUsub_fulltow.root");
+   createScaleFile(basepath+"/unclunseltowers/PUsub/output_VBF_HToInvisible_PU200.root", "clujet", "", basepath+"/jec_VBF_PUsub_clu.root");
+   createScaleFile(basepath+"/unclunseltowers/PUsub/output_VBF_HToInvisible_PU200.root", "clutowjet", "", basepath+"/jec_VBF_PUsub_unclclutow.root");
+   createScaleFile(basepath+"/fulltowers/PUsub/output_VBF_HToInvisible_PU200.root", "towjet", "", basepath+"/jec_VBF_PUsub_fulltow.root");
 }
 
 void applyJEC(TString filein, TString fileout, TString basepath="./") {
@@ -132,22 +132,46 @@ void applyJEC(TString filein, TString fileout, TString basepath="./") {
 
    // read JEC files
    TFile *f_jec_clu, *f_jec_unclclutow, *f_jec_fulltow;
+   TString name_jec_clu, name_jec_unclclutow, name_jec_fulltow;
    TGraph2D *g2d_jec_clu, *g2d_jec_unclclutow, *g2d_jec_fulltow;
    TString suffix = "";
+   
    if (filein.Contains("offset")) suffix = "_offset";
    if (filein.Contains("PU200") && filein.Contains("noPUsub")) {
-      f_jec_clu = TFile::Open(basepath+"jec_VBF_PU200_clu"+suffix+".root");
-      f_jec_unclclutow = TFile::Open(basepath+"jec_VBF_PU200_unclclutow"+suffix+".root");
-      f_jec_fulltow = TFile::Open(basepath+"jec_VBF_PU200_fulltow"+suffix+".root");
+      name_jec_clu = basepath+"/jec_VBF_PU200_clu"+suffix+".root";
+      name_jec_unclclutow = basepath+"/jec_VBF_PU200_unclclutow"+suffix+".root";
+      name_jec_fulltow = basepath+"/jec_VBF_PU200_fulltow"+suffix+".root";
    } else if (filein.Contains("NoPU")) {
-      f_jec_clu = TFile::Open(basepath+"jec_VBF_NoPU_clu"+suffix+".root");
-      f_jec_unclclutow = TFile::Open(basepath+"jec_VBF_NoPU_unclclutow"+suffix+".root");
-      f_jec_fulltow = TFile::Open(basepath+"jec_VBF_NoPU_fulltow"+suffix+".root");
+      name_jec_clu = basepath+"/jec_VBF_NoPU_clu"+suffix+".root";
+      name_jec_unclclutow = basepath+"/jec_VBF_NoPU_unclclutow"+suffix+".root";
+      name_jec_fulltow = basepath+"/jec_VBF_NoPU_fulltow"+suffix+".root";
    } else {
-      f_jec_clu = TFile::Open(basepath+"jec_VBF_PUsub_clu"+suffix+".root");
-      f_jec_unclclutow = TFile::Open(basepath+"jec_VBF_PUsub_unclclutow"+suffix+".root");
-      f_jec_fulltow = TFile::Open(basepath+"jec_VBF_PUsub_fulltow"+suffix+".root");
+      name_jec_clu = basepath+"/jec_VBF_PUsub_clu"+suffix+".root";
+      name_jec_unclclutow = basepath+"/jec_VBF_PUsub_unclclutow"+suffix+".root";
+      name_jec_fulltow = basepath+"/jec_VBF_PUsub_fulltow"+suffix+".root";
    }
+
+   f_jec_clu = TFile::Open(name_jec_clu);
+   if (!f_jec_clu) {
+      cout << "applyJEC: " << name_jec_clu << " does not exist, skipping." << endl;
+      return;
+   }
+   f_jec_unclclutow = TFile::Open(name_jec_unclclutow);
+   if (!f_jec_unclclutow) {
+      cout << "applyJEC: " << name_jec_unclclutow << " does not exist, skipping." << endl;
+      return;
+   }
+   f_jec_fulltow = TFile::Open(name_jec_fulltow);
+   if (!f_jec_fulltow) {
+      // ok, for full tow let's give it another chance and fall back to default
+      name_jec_fulltow = "/eos/cms/store/group/phys_heavyions/echapon/HGCal/l1jetperf/trees/default/jec_VBF_PUsub_fulltow"+suffix+".root";
+      f_jec_fulltow = TFile::Open(name_jec_fulltow);
+      if (!f_jec_fulltow) {
+         cout << "applyJEC: " << name_jec_fulltow << " does not exist, skipping." << endl;
+         return;
+      }
+   }
+
    g2d_jec_clu = (TGraph2D*) f_jec_clu->Get("Graph2D");
    g2d_jec_unclclutow = (TGraph2D*) f_jec_unclclutow->Get("Graph2D");
    g2d_jec_fulltow = (TGraph2D*) f_jec_fulltow->Get("Graph2D");
@@ -237,19 +261,21 @@ void applyJEC(TString filein, TString fileout, TString basepath="./") {
    fin->Close();
 }
 
-void applyJEC(TString basepath="./") {
-   applyJEC(basepath+"fulltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_NoPU.root",basepath+"fulltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_NoPU_cor.root",basepath);
-   applyJEC(basepath+"fulltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_offset.root",basepath+"fulltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_offcor.root",basepath);
-   applyJEC(basepath+"fulltowers/noPUsub/output_VBF_HToInvisible_NoPU.root",basepath+"fulltowers/noPUsub/output_VBF_HToInvisible_NoPU_cor.root",basepath);
-   applyJEC(basepath+"fulltowers/noPUsub/output_VBF_HToInvisible_PU200_offset.root",basepath+"fulltowers/noPUsub/output_VBF_HToInvisible_PU200_offcor.root",basepath);
-   applyJEC(basepath+"fulltowers/PUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200.root",basepath+"fulltowers/PUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_cor.root",basepath);
-   applyJEC(basepath+"fulltowers/PUsub/output_VBF_HToInvisible_PU200.root",basepath+"fulltowers/PUsub/output_VBF_HToInvisible_PU200_cor.root",basepath);
-   applyJEC(basepath+"unclunseltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_NoPU.root",basepath+"unclunseltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_NoPU_cor.root",basepath);
-   applyJEC(basepath+"unclunseltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_offset.root",basepath+"unclunseltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_offcor.root",basepath);
-   applyJEC(basepath+"unclunseltowers/noPUsub/output_VBF_HToInvisible_NoPU.root",basepath+"unclunseltowers/noPUsub/output_VBF_HToInvisible_NoPU_cor.root",basepath);
-   applyJEC(basepath+"unclunseltowers/noPUsub/output_VBF_HToInvisible_PU200_offset.root",basepath+"unclunseltowers/noPUsub/output_VBF_HToInvisible_PU200_offcor.root",basepath);
-   applyJEC(basepath+"unclunseltowers/PUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200.root",basepath+"unclunseltowers/PUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_cor.root",basepath);
-   applyJEC(basepath+"unclunseltowers/PUsub/output_VBF_HToInvisible_PU200.root",basepath+"unclunseltowers/PUsub/output_VBF_HToInvisible_PU200_cor.root",basepath);
+void applyJEC(TString basepath=".") {
+   applyJEC(basepath+"/fulltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_NoPU.root",basepath+"/fulltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_NoPU_cor.root",basepath);
+   applyJEC(basepath+"/fulltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_offset.root",basepath+"/fulltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_offcor.root",basepath);
+   applyJEC(basepath+"/fulltowers/noPUsub/output_VBF_HToInvisible_NoPU.root",basepath+"/fulltowers/noPUsub/output_VBF_HToInvisible_NoPU_cor.root",basepath);
+   applyJEC(basepath+"/fulltowers/noPUsub/output_VBF_HToInvisible_PU200_offset.root",basepath+"/fulltowers/noPUsub/output_VBF_HToInvisible_PU200_offcor.root",basepath);
+   applyJEC(basepath+"/fulltowers/PUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200.root",basepath+"/fulltowers/PUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_cor.root",basepath);
+   applyJEC(basepath+"/fulltowers/PUsub/output_VBF_HToInvisible_PU200.root",basepath+"/fulltowers/PUsub/output_VBF_HToInvisible_PU200_cor.root",basepath);
+   applyJEC(basepath+"/fulltowers/noPUsub/output_NuE10-pythia8-gun_PU200_offset.root",basepath+"/fulltowers/noPUsub/output_NuE10-pythia8-gun_PU200_offcor.root",basepath);
+   applyJEC(basepath+"/unclunseltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_NoPU.root",basepath+"/unclunseltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_NoPU_cor.root",basepath);
+   applyJEC(basepath+"/unclunseltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_offset.root",basepath+"/unclunseltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_offcor.root",basepath);
+   applyJEC(basepath+"/unclunseltowers/noPUsub/output_VBF_HToInvisible_NoPU.root",basepath+"/unclunseltowers/noPUsub/output_VBF_HToInvisible_NoPU_cor.root",basepath);
+   applyJEC(basepath+"/unclunseltowers/noPUsub/output_VBF_HToInvisible_PU200_offset.root",basepath+"/unclunseltowers/noPUsub/output_VBF_HToInvisible_PU200_offcor.root",basepath);
+   applyJEC(basepath+"/unclunseltowers/PUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200.root",basepath+"/unclunseltowers/PUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_cor.root",basepath);
+   applyJEC(basepath+"/unclunseltowers/PUsub/output_VBF_HToInvisible_PU200.root",basepath+"/unclunseltowers/PUsub/output_VBF_HToInvisible_PU200_cor.root",basepath);
+   applyJEC(basepath+"/unclunseltowers/noPUsub/output_NuE10-pythia8-gun_PU200_offset.root",basepath+"/unclunseltowers/noPUsub/output_NuE10-pythia8-gun_PU200_offcor.root",basepath);
 }
 
 void applyOffset(TString filein, TString fileout) {
@@ -292,16 +318,16 @@ void applyOffset(TString filein, TString fileout) {
    ftow.SetParameters(-3.16924,3.17969,-0.555375,-0.0247883);
 
    // parameters for clu and clutow depend on how clusters were generated
-   if filein.Contains("/fixphismooth/") {
+   if (filein.Contains("/fixphismooth/")) {
       fclu.SetParameters(-5.87156,-0.389373,2.23095,-0.43595);
       fclutow.SetParameters(-5.12634,5.94146,-1.83501,0.17018);
-   } else if filein.Contains("/noarea/") {
+   } else if (filein.Contains("/noarea/")) {
       fclu.SetParameters(-12.7411,15.1547,-6.14957,0.867665);
       fclutow.SetParameters(-5.32816,6.23085,-1.96033,0.187501);
-   } else if filein.Contains("/rphi_thr6p5/") {
+   } else if (filein.Contains("/rphi_thr6p5/")) {
       fclu.SetParameters(-15.6655,15.2532,-5.17996,0.651576);
       fclutow.SetParameters(-5.20646,6.06419,-1.8944,0.17948);
-   } else if filein.Contains("/xyseed/") {
+   } else if (filein.Contains("/xyseed/")) {
       fclu.SetParameters(4.7857,-14.3544,8.77443,-1.48954);
       fclutow.SetParameters(-4.32072,4.79285,-1.29292,0.0853122);
    } else { // default
@@ -345,17 +371,19 @@ void applyOffset(TString filein, TString fileout) {
    fin->Close();
 }
 
-void applyOffset() {
-   applyOffset(basepath+"fulltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_NoPU.root",basepath+"fulltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_NoPU_offset.root",basepath);
-   applyOffset(basepath+"fulltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200.root",basepath+"fulltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_offset.root",basepath);
-   applyOffset(basepath+"fulltowers/noPUsub/output_VBF_HToInvisible_NoPU.root",basepath+"fulltowers/noPUsub/output_VBF_HToInvisible_NoPU_offset.root",basepath);
-   applyOffset(basepath+"fulltowers/noPUsub/output_VBF_HToInvisible_PU200.root",basepath+"fulltowers/noPUsub/output_VBF_HToInvisible_PU200_offset.root",basepath);
-   applyOffset(basepath+"fulltowers/PUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200.root",basepath+"fulltowers/PUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_offset.root",basepath);
-   applyOffset(basepath+"fulltowers/PUsub/output_VBF_HToInvisible_PU200.root",basepath+"fulltowers/PUsub/output_VBF_HToInvisible_PU200_offset.root",basepath);
-   applyOffset(basepath+"unclunseltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_NoPU.root",basepath+"unclunseltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_NoPU_offset.root",basepath);
-   applyOffset(basepath+"unclunseltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200.root",basepath+"unclunseltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_offset.root",basepath);
-   applyOffset(basepath+"unclunseltowers/noPUsub/output_VBF_HToInvisible_NoPU.root",basepath+"unclunseltowers/noPUsub/output_VBF_HToInvisible_NoPU_offset.root",basepath);
-   applyOffset(basepath+"unclunseltowers/noPUsub/output_VBF_HToInvisible_PU200.root",basepath+"unclunseltowers/noPUsub/output_VBF_HToInvisible_PU200_offset.root",basepath);
-   applyOffset(basepath+"unclunseltowers/PUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200.root",basepath+"unclunseltowers/PUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_offset.root",basepath);
-   applyOffset(basepath+"unclunseltowers/PUsub/output_VBF_HToInvisible_PU200.root",basepath+"unclunseltowers/PUsub/output_VBF_HToInvisible_PU200_offset.root",basepath);
+void applyOffset(TString basepath=".") {
+   applyOffset(basepath+"/fulltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_NoPU.root",basepath+"/fulltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_NoPU_offset.root");
+   applyOffset(basepath+"/fulltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200.root",basepath+"/fulltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_offset.root");
+   applyOffset(basepath+"/fulltowers/noPUsub/output_VBF_HToInvisible_NoPU.root",basepath+"/fulltowers/noPUsub/output_VBF_HToInvisible_NoPU_offset.root");
+   applyOffset(basepath+"/fulltowers/noPUsub/output_VBF_HToInvisible_PU200.root",basepath+"/fulltowers/noPUsub/output_VBF_HToInvisible_PU200_offset.root");
+   applyOffset(basepath+"/fulltowers/PUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200.root",basepath+"/fulltowers/PUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_offset.root");
+   applyOffset(basepath+"/fulltowers/PUsub/output_VBF_HToInvisible_PU200.root",basepath+"/fulltowers/PUsub/output_VBF_HToInvisible_PU200_offset.root");
+   applyOffset(basepath+"/fulltowers/noPUsub/output_NuE10-pythia8-gun_PU200.root",basepath+"/fulltowers/noPUsub/output_NuE10-pythia8-gun_PU200_offset.root");
+   applyOffset(basepath+"/unclunseltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_NoPU.root",basepath+"/unclunseltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_NoPU_offset.root");
+   applyOffset(basepath+"/unclunseltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200.root",basepath+"/unclunseltowers/noPUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_offset.root");
+   applyOffset(basepath+"/unclunseltowers/noPUsub/output_VBF_HToInvisible_NoPU.root",basepath+"/unclunseltowers/noPUsub/output_VBF_HToInvisible_NoPU_offset.root");
+   applyOffset(basepath+"/unclunseltowers/noPUsub/output_VBF_HToInvisible_PU200.root",basepath+"/unclunseltowers/noPUsub/output_VBF_HToInvisible_PU200_offset.root");
+   applyOffset(basepath+"/unclunseltowers/PUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200.root",basepath+"/unclunseltowers/PUsub/output_RelValDiQ_Pt20To300_Etam1p6Tom2p9_PU200_offset.root");
+   applyOffset(basepath+"/unclunseltowers/PUsub/output_VBF_HToInvisible_PU200.root",basepath+"/unclunseltowers/PUsub/output_VBF_HToInvisible_PU200_offset.root");
+   applyOffset(basepath+"/unclunseltowers/noPUsub/output_NuE10-pythia8-gun_PU200.root",basepath+"/unclunseltowers/noPUsub/output_NuE10-pythia8-gun_PU200_offset.root");
 }
