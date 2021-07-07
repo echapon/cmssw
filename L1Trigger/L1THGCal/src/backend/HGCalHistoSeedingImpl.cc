@@ -67,7 +67,7 @@ HGCalHistoSeedingImpl::HGCalHistoSeedingImpl(const edm::ParameterSet& conf)
   }
 
   // compute quantities for non-normalised-by-area histoMax
-  bin1_10pct_ = (int) 0.1*nBins1_;
+  bin1_10pct_ = (int)0.1 * nBins1_;
   R1_10pct_ = kROverZMin_ + bin1_10pct_ * (kROverZMax_ - kROverZMin_) / nBins1_;
   R2_10pct_ = R1_10pct_ + ((kROverZMax_ - kROverZMin_) / nBins1_);
   area_10pct_ = ((M_PI * (pow(R2_10pct_, 2) - pow(R1_10pct_, 2))) / nBins2_);
@@ -170,18 +170,22 @@ HGCalHistoSeedingImpl::Histogram HGCalHistoSeedingImpl::fillSmoothPhiHistoCluste
                                                                                    const vector<unsigned>& binSums) {
   Histogram histoSumPhiClusters(nBins1_, nBins2_);
 
-
   for (int z_side : {-1, 1}) {
     for (unsigned bin1 = 0; bin1 < nBins1_; bin1++) {
       int nBinsSide = (binSums[bin1] - 1) / 2;
-      double area = (1 + 2.0 * (1 - pow(0.5, nBinsSide)));  // Takes into account different area of bins in different R-rings + sum of quadratic weights used
+      double area =
+          (1 +
+           2.0 *
+               (1 -
+                pow(0.5,
+                    nBinsSide)));  // Takes into account different area of bins in different R-rings + sum of quadratic weights used
 
       if (seeds_norm_by_area_) {
-         float R1 = kROverZMin_ + bin1 * (kROverZMax_ - kROverZMin_) / nBins1_;
-         float R2 = R1 + ((kROverZMax_ - kROverZMin_) / nBins1_);
-         area = area * ((M_PI * (pow(R2, 2) - pow(R1, 2))) / nBins2_);
+        float R1 = kROverZMin_ + bin1 * (kROverZMax_ - kROverZMin_) / nBins1_;
+        float R2 = R1 + ((kROverZMax_ - kROverZMin_) / nBins1_);
+        area = area * ((M_PI * (pow(R2, 2) - pow(R1, 2))) / nBins2_);
       } else {
-         area = area * area_10pct_;
+        area = area * area_10pct_;
       }
 
       for (unsigned bin2 = 0; bin2 < nBins2_; bin2++) {
